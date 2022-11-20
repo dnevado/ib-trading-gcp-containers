@@ -33,11 +33,13 @@ steps:
   - '-c'
   - |
       if [ -d "gke/kubernetes-cluster/$BRANCH_NAME/" ]; then
+        echo "$BRANCH_NAME"
         cd gke/kubernetes-cluster/$BRANCH_NAME
         terraform init
       else
         for dir in gke/kubernetes-cluster
         do 
+          echo ${dir}
           cd ${dir}   
           env=${dir%/}
           env=${env#*/}
