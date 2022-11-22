@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # install dependencies
 RUN  apt-get update \
@@ -12,11 +12,12 @@ ENV APP=GATEWAY \
     LOG_PATH=/opt/ibc/logs \
     TWS_INSTALL_LOG=/root/Jts/tws_install.log \
     TWS_PATH=/root/Jts \
-    TWS_SETTINGS_PATH=/root/Jts
+    TWS_SETTINGS_PATH=/root/Jts \
+    TWS_INSTALLATION_DIR=/root/Jts/ibgateway/1019
 
 # make dirs
-RUN mkdir -p /tmp && mkdir -p ${IBC_PATH} && mkdir -p ${TWS_PATH}
-
+RUN mkdir -p /tmp && mkdir -p ${IBC_PATH} && mkdir -p ${TWS_PATH} 
+# && mkdir -p ${TWS_INSTALLATION_DIR}
 # download IB TWS
 RUN wget -q -O /tmp/ibgw.sh https://download2.interactivebrokers.com/installers/ibgateway/stable-standalone/ibgateway-stable-standalone-linux-x64.sh
 RUN chmod +x /tmp/ibgw.sh
@@ -27,7 +28,13 @@ RUN unzip /tmp/IBC.zip -d ${IBC_PATH}
 RUN chmod +x ${IBC_PATH}/*.sh ${IBC_PATH}/*/*.sh
 
 # install TWS, write output to file so that we can parse the TWS version number later
-RUN yes n | /tmp/ibgw.sh > ${TWS_INSTALL_LOG}
+# skipping warning messages 
+# printf "/root/Jts/ibgateway/1019\nn" |  /tmp/ibgw.sh
+# installing on the default path  (y)
+# run after installation no
+# more info https://www.baeldung.com/linux/bash-interactive-prompts
+RUN printf "${TWS_INSTALLATION_DIR}\\nn"  | /tmp/ibgw.sh > ${TWS_INSTALL_LOG} 
+# "/root/Jts/ibgateway/1019\nn"
 
 # remove downloaded files
 RUN rm /tmp/ibgw.sh /tmp/IBC.zip

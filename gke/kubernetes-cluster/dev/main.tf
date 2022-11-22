@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     google = {
-      source  = "hashicorp/google"
-      version = "4.8.0"
+      source = "hashicorp/google"
+      version = "4.43.1"
     }
   }
 }
@@ -180,9 +180,8 @@ EOT
 }
 
 resource "google_artifact_registry_repository" "ib-gateway" {
-  location      =  var.zone
+  location      =  var.region
   repository_id = "ib-gateway-${var.env}"
   description   = "ib-gateway ${var.env}"
-  format        = "DOCKER"
-  kms_key_name  = "kms-ib-gateway-${var.env}"
+  format        = "DOCKER" 
 }
