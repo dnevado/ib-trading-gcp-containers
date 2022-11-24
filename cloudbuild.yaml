@@ -107,13 +107,13 @@ steps:
 
 
 # [END build ibgateway ibc]
-- id: 'ib-gateway-healthcheck'
+- id: 'build ib-gateway-healthcheck'
   name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
 
 # Push my-app image to Google Cloud Registry
 - id: 'push ib-gateway-healthcheck'
-- name: gcr.io/cloud-builders/docker
+  name: gcr.io/cloud-builders/docker
   args:
     - push
     - eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest
@@ -149,6 +149,6 @@ images: [eu.gcr.io/$PROJECT_ID/ibc:latest,eu.gcr.io/$PROJECT_ID/ib-gateway-healt
 
 options:
   logging: CLOUD_LOGGING_ONLY
-substitutions:
-  _CUSTOM_REGION: europe-southwest-1
-  _CUSTOM_CLUSTER: ib-trading-$BRANCH_NAME  
+# substitutions:
+#   _CUSTOM_REGION: europe-southwest-1
+#   _CUSTOM_CLUSTER: ib-trading-$BRANCH_NAME  
