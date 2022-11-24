@@ -98,12 +98,57 @@ steps:
   name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"]
 
+ # Push my-app image to Google Cloud Registry
+- id: 'push ibgateway ibc'
+- name: gcr.io/cloud-builders/docker
+  args:
+    - push
+    - eu.gcr.io/$PROJECT_ID/ibc:latest
+
+
 # [END build ibgateway ibc]
 - id: 'ib-gateway-healthcheck'
   name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
 
+# Push my-app image to Google Cloud Registry
+- id: 'push ib-gateway-healthcheck'
+- name: gcr.io/cloud-builders/docker
+  args:
+    - push
+    - eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest
+
+# Configure a kubectl workspace for this project
+- id: 'Configure a kubectl'
+- name: eu.gcr.io/cloud-builders/kubectl
+  args:
+    - cluster-info
+  env:
+    - CLOUDSDK_COMPUTE_REGION=$_CUSTOM_REGION
+    - CLOUDSDK_CONTAINER_CLUSTER=$_CUSTOM_CLUSTER
+    - KUBECONFIG=/workspace/.kube/config
+
+# Deploy with Helm
+#- id: 'deploy with Helm'
+#- name: eu.gcr.io/$PROJECT_ID/helm
+#  args:
+#    - upgrade
+#    - -i
+#    - my-app
+#    - ./kubernetes
+#    - --set
+#    - image.repository=eu.gcr.io/$PROJECT_ID/ibc:latest
+#    - -f
+#    - ./kubernetes/values.yaml
+#  env:
+#    - KUBECONFIG=/workspace/.kube/config
+#    - TILLERLESS=false
+#    - TILLER_NAMESPACE=kube-system
+
 images: [eu.gcr.io/$PROJECT_ID/ibc:latest,eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest]  
 
 options:
   logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _CUSTOM_REGION: europe-southwest-1
+  _CUSTOM_CLUSTER: ib-trading-$BRANCH_NAME  
