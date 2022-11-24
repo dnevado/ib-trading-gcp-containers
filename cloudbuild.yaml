@@ -95,16 +95,15 @@ steps:
       fi
 # [END tf-apply]
 - id: 'build ibgateway ibc'
-  name: 'eu.gcr.io/cloud-builders/docker'  
+  name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"]
 
 
 
 # [END build ibgateway ibc]
 - id: 'build ib-gateway-healthcheck'
-  name: 'eu.gcr.io/cloud-builders/docker'  
+  name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
-
 
 # Configure a kubectl workspace for this project
 #- id: 'Configure a kubectl'
