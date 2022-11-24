@@ -112,11 +112,11 @@ steps:
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
 
 # Push my-app image to Google Cloud Registry
-- id: 'push ib-gateway-healthcheck'
-  name: gcr.io/cloud-builders/docker
-  args:
-    - push
-    - eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest
+#- id: 'push ib-gateway-healthcheck'
+#  name: gcr.io/cloud-builders/docker
+#  args:
+#    - push
+#    - eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest
 
 # Configure a kubectl workspace for this project
 #- id: 'Configure a kubectl'
