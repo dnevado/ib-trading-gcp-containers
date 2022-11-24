@@ -94,16 +94,16 @@ steps:
         echo "*******************************************************************************"
       fi
 # [END tf-apply]
-# - id: 'build ibgateway ibc'
-#  name: 'gcr.io/cloud-builders/docker'  
-#  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"]
+ - id: 'build ibgateway ibc'
+  name: 'gcr.io/cloud-builders/docker'  
+  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"]
 
 # [END build ibgateway ibc]
-#- id: 'ib-gateway-healthcheck'
-#  name: 'gcr.io/cloud-builders/docker'  
-#  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
+- id: 'ib-gateway-healthcheck'
+  name: 'gcr.io/cloud-builders/docker'  
+  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
 
-# images: [eu.gcr.io/$PROJECT_ID/ibc:latest,eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest]  
+ images: [eu.gcr.io/$PROJECT_ID/ibc:latest,eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest]  
 
 options:
   logging: CLOUD_LOGGING_ONLY
