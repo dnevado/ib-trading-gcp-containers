@@ -26,7 +26,7 @@ steps:
       echo "$BRANCH_NAME"
       echo "************************"
 
-- id: 'tf init'
+- id: 'Infra Tf init'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'sh'
   args: 
@@ -53,7 +53,7 @@ steps:
       fi 
 
 # [START tf-plan]
-- id: 'tf plan'
+- id: 'Infra Tf plan'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'sh'
   args: 
@@ -79,7 +79,7 @@ steps:
 # [END tf-plan]
 
 # [START tf-apply]
-- id: 'tf apply'
+- id: 'Infra Tf apply'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'sh'
   args: 
@@ -94,14 +94,14 @@ steps:
         echo "*******************************************************************************"
       fi
 # [END tf-apply]
-- id: 'build ibgateway ibc'
+- id: 'Build ibgateway ibc'
   name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"]
 
 
 
 # [END build ibgateway ibc]
-- id: 'build ib-gateway-healthcheck'
+- id: 'Build ib-gateway-healthcheck'
   name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
 
