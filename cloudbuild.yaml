@@ -115,7 +115,7 @@ steps:
 #    - CLOUDSDK_CONTAINER_CLUSTER=$_CUSTOM_CLUSTER
 #    - KUBECONFIG=/workspace/.kube/config
 
-# Deploy with Helm
+# Deploy with Helm 
 #- id: 'deploy with Helm'
 #- name: eu.gcr.io/$PROJECT_ID/helm
 #  args:
