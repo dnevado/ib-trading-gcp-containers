@@ -41,6 +41,7 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 
 # copy IBC/Jts configs
 COPY config/config.ini ${IBC_INI}
+
 COPY config/jts.ini ${TWS_PATH}/jts.ini
 
 # copy cmd script

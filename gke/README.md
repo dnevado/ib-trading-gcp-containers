@@ -14,3 +14,6 @@ These are the code samples behind my Medium article [Building my own Cloud-based
 [IBC]: https://github.com/IbcAlpha/IBC
 [IB's Python API]: https://interactivebrokers.github.io/
 [IB-insync]: https://github.com/erdewit/ib_insync
+
+PENDING MANUAL ACTIONS 
+ib-gateway

@@ -107,15 +107,12 @@ steps:
 
 # CONFIGURE A TEMPORARY PROXY TO DEPLOY DEPLOYMENTS 
 - id: 'Temp proxy bastion host for Cloud Build'
-  name: gcr.io/cloud-builders/docker
+  name: gcr.io/cloud-builders/gcloud
   entrypoint: sh
   args:
   - -c
-  - docker run -d --net cloudbuild --name kubectl-proxy
-      gcr.io/cloud-builders/gcloud compute start-iap-tunnel
-      bastion-host-$BRANCH_NAME 8080 --local-host-port 0.0.0.0:8080 --zone europe-southwest-1 &&
-    sleep 5
-
+  - gcloud container clusters get-credentials ib-trading--$BRANCH_NAME  --region europe-southwest1-a
+    gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
 
 # Configure a kubectl workspace for this project
 - id: 'Deploy into cluster  ibgateway ibc'
@@ -123,7 +120,8 @@ steps:
   entrypoint: sh
   args:
   - -c
-  - HTTPS_PROXY=socks5://kubectl-proxy:8080 kubectl apply -f ./gke/ib-gateway/ib-gateway.yaml
+  - export HTTPS_PROXY=localhost:8888 
+    kubectl apply -f ./gke/ib-gateway/ib-gateway.yaml
 
 #- id: 'Configure a kubectl'
 #- name: eu.gcr.io/cloud-builders/kubectl
