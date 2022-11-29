@@ -107,12 +107,14 @@ steps:
 
 # CONFIGURE A TEMPORARY PROXY TO DEPLOY DEPLOYMENTS 
 - id: 'Temp proxy bastion host for Cloud Build'
-  name: gcr.io/cloud-builders/gcloud
-  entrypoint: sh
-  args:
-  - -c
-  - gcloud container clusters get-credentials ib-trading--$BRANCH_NAME  --region europe-southwest1-a
-    gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
+  name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+  args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-southwest1-a']
+  args: ['gcloud', 'compute', 'ssh', 'bastion-host-$BRANCH_NAME', '--tunnel-through-iap','--project','api-project-786272790820','----zone','europe-southwest1-a','--region','europe-southwest1-a']
+  #entrypoint: sh
+  #args:
+  #- -c
+  #- gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-southwest1-a
+  #  gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
 
 # Configure a kubectl workspace for this project
 - id: 'Deploy into cluster  ibgateway ibc'
