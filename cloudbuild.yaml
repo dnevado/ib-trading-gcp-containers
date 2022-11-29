@@ -105,7 +105,26 @@ steps:
   name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
 
+# CONFIGURE A TEMPORARY PROXY TO DEPLOY DEPLOYMENTS 
+- id: 'Temp proxy bastion host for Cloud Build'
+  name: gcr.io/cloud-builders/docker
+  entrypoint: sh
+  args:
+  - -c
+  - docker run -d --net cloudbuild --name kubectl-proxy
+      gcr.io/cloud-builders/gcloud compute start-iap-tunnel
+      bastion-host-$BRANCH_NAME 8080 --local-host-port 0.0.0.0:8080 --zone europe-southwest-1 &&
+    sleep 5
+
+
 # Configure a kubectl workspace for this project
+- id: 'Deploy into cluster  ibgateway ibc'
+  name: gcr.io/cloud-builders/kubectl
+  entrypoint: sh
+  args:
+  - -c
+  - HTTPS_PROXY=socks5://kubectl-proxy:8080 kubectl apply -f ./gke/ib-gateway/ib-gateway.yaml
+
 #- id: 'Configure a kubectl'
 #- name: eu.gcr.io/cloud-builders/kubectl
 #  args:
