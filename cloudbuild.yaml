@@ -114,11 +114,11 @@ steps:
   # args: ['gcloud', 'compute', 'ssh', 'bastion-host-$BRANCH_NAME', '--tunnel-through-iap','--project','api-project-786272790820','--zone','europe-southwest1-a','--region','europe-southwest1-a',
   #       '--','-L8888:localhost:8888']
   entrypoint: 'bash'
-    args: 
-      - -c
-      - |
-        gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
-        gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
+  args: 
+  - -c
+  - |
+    gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
+    gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
 
   #entrypoint: sh
   #args:
