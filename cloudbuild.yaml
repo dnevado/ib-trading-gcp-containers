@@ -94,16 +94,16 @@ steps:
         echo "*******************************************************************************"
       fi
 # [END tf-apply]
-- id: 'Build ibgateway ibc'
-  name: 'gcr.io/cloud-builders/docker'  
-  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"]
+#- id: 'Build ibgateway ibc'
+#  name: 'gcr.io/cloud-builders/docker'  
+#  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"]
 
 
 
 # [END build ibgateway ibc]
-- id: 'Build ib-gateway-healthcheck'
-  name: 'gcr.io/cloud-builders/docker'  
-  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
+#- id: 'Build ib-gateway-healthcheck'
+#  name: 'gcr.io/cloud-builders/docker'  
+#  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
 
 # Authorize Cloud Build to Access the Private Cluster (Enable Control Plane Authorized Networks)
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
