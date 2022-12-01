@@ -110,7 +110,7 @@ steps:
 
 - id: 'Temp proxy bastion host for Cloud Build'
   name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
-  # args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-southwest1-a']
+   args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-southwest1-a']
   # args: ['gcloud', 'compute', 'ssh', 'bastion-host-$BRANCH_NAME', '--tunnel-through-iap','--project','api-project-786272790820','--zone','europe-southwest1-a','--region','europe-southwest1-a',
   #       '--','-L8888:localhost:8888']
   #entrypoint: 'bash'
@@ -120,20 +120,20 @@ steps:
     #gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
     #gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
 
-  entrypoint: sh
-  args:
-  - -c
-  - gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-southwest1-a
-    gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
+  #entrypoint: sh
+  #args:
+  #- -c
+  #- gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-southwest1-a
+  #  gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
 
 # Configure a kubectl workspace for this project
-- id: 'Deploy into cluster  ibgateway ibc'
-  name: gcr.io/cloud-builders/kubectl
-  entrypoint: sh
-  args:
-  - -c
-  - export HTTPS_PROXY=localhost:8888 
-    kubectl apply -f ./gke/ib-gateway/ib-gateway.yaml
+#- id: 'Deploy into cluster  ibgateway ibc'
+#  name: gcr.io/cloud-builders/kubectl
+#  entrypoint: sh
+#  args:
+#  - -c
+#  - export HTTPS_PROXY=localhost:8888 
+#    kubectl apply -f ./gke/ib-gateway/ib-gateway.yaml
 
 #- id: 'Configure a kubectl'
 #- name: eu.gcr.io/cloud-builders/kubectl
