@@ -105,12 +105,45 @@ steps:
   name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest',"./gke/ib-gateway/healthcheck"]
 
+# Authorize Cloud Build to Access the Private Cluster (Enable Control Plane Authorized Networks)
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  id: 'Authorize Cloud Build to Access the Private Cluster'
+  entrypoint: 'bash'
+  args:
+    - -c
+    - |
+      apt-get install dnsutils -y &&
+      cloudbuild_external_ip=$(dig @resolver4.opendns.com myip.opendns.com +short) &&
+      gcloud container clusters update ib-trading-$BRANCH_NAME --zone=europe-southwest1-a --enable-master-authorized-networks --master-authorized-networks $cloudbuild_external_ip/32 &&
+      echo $cloudbuild_external_ip
+
+# Disable Control Plane Authorized Networks after Deployment
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  id: 'Disable Authorized Networks'
+  entrypoint: 'gcloud'
+  args:
+    - 'container'
+    - 'clusters'
+    - 'update'
+    - ib-trading-$BRANCH_NAME'
+    - '--zone=europe-southwest1-a'
+    - '--no-enable-master-authorized-networks'      
+
+
 # CONFIGURE A TEMPORARY PROXY TO DEPLOY DEPLOYMENTS 
+#- id: 'Build kubectl-proxy'
+#  name: gcr.io/cloud-builders/docker
+#  entrypoint: sh
+#  args:
+#  - -c
+#  - docker run -d --net cloudbuild --name kubectl-proxy
+#      gcr.io/cloud-builders/gcloud compute start-iap-tunnel
+#      bastion-host-$BRANCH_NAME 8080 --local-host-port 0.0.0.0:8080 --zone europe-southwest1-a &&
+#    sleep 5
 
-
-- id: 'Temp proxy bastion host for Cloud Build'
-  name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
-  args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-southwest1-a']
+#- id: 'Temp proxy bastion host for Cloud Build'
+#  name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+#  args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-southwest1-a']
   # args: ['gcloud', 'compute', 'ssh', 'bastion-host-$BRANCH_NAME', '--tunnel-through-iap','--project','api-project-786272790820','--zone','europe-southwest1-a','--region','europe-southwest1-a',
   #       '--','-L8888:localhost:8888']
   #entrypoint: 'bash'
