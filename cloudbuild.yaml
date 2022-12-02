@@ -109,12 +109,16 @@ steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   id: 'Authorize Cloud Build to Access the Private Cluster'
   entrypoint: 'bash'
+  # 
+  # **** DOES NOT WORK, MY IP AUTHORIZATION  network  is not a reserved network, which is required for private endpoints
+  # gcloud container clusters update ib-trading-$BRANCH_NAME --zone=europe-southwest1-a --enable-master-authorized-networks --master-authorized-networks $cloudbuild_external_ip/32 &&
+  # WE LEAVE A LIKELY SECURITY BREACH 
   args:
     - -c
     - |
       apt-get install dnsutils -y &&
       cloudbuild_external_ip=$(dig @resolver4.opendns.com myip.opendns.com +short) &&
-      gcloud container clusters update ib-trading-$BRANCH_NAME --zone=europe-southwest1-a --enable-master-authorized-networks --master-authorized-networks $cloudbuild_external_ip/32 &&
+      gcloud container clusters update ib-trading-$BRANCH_NAME --zone=europe-southwest1-a --enable-master-authorized-networks --master-authorized-networks 0.0.0.0/0 &&  
       echo $cloudbuild_external_ip
 
 # Disable Control Plane Authorized Networks after Deployment
