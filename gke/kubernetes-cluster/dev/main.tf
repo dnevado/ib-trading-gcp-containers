@@ -137,7 +137,6 @@ resource "google_container_cluster" "ib_trading" {
   private_cluster_config {
     enable_private_nodes = true
     enable_private_endpoint = true
-    enable_public_endpoint = true    
     master_ipv4_cidr_block = "172.16.0.0/28"
   }
 }
