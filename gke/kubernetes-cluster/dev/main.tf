@@ -202,9 +202,9 @@ resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host" {
   source_ranges = [
     "35.235.240.0/20", "10.172.0.0/20", "0.0.0.0/0"
   ]
-  target_tags = [
-    "bastion-host-${var.env}"
-  ]
+  #target_tags = [
+  #  "bastion-host-${var.env}"
+  #]
   network = google_compute_network.ib_trading_net.id
   allow {
     protocol = "tcp"
