@@ -12,12 +12,12 @@ provider "google" {
   zone    = var.zone
 }
 
-# resource "google_compute_network" "ib_trading_net" {
-#   provider = google-beta
-#   project = var.project_id
-#   name = "ib-trading-net-${var.env}"
-#   auto_create_subnetworks = false
-# }
+resource "google_compute_network" "ib_trading_net" {
+  provider = google-beta
+  project = var.project_id
+  name = "ib-trading-net-${var.env}"
+  auto_create_subnetworks = false
+}
 
 #tfimport-terraform import google_compute_subnetwork.ib_trading_subnet __project__/europe-southwest1/ib-trading-subnet
 resource "google_compute_subnetwork" "ib_trading_subnet" {
