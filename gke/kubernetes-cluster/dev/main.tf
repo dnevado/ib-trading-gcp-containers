@@ -204,5 +204,7 @@ resource "google_artifact_registry_repository" "ib-gateway" {
     ports    = ["8888"]
   }
   target_tags   = ["bastion"]
-  source_ranges = "0.0.0.0/0"
+   source_ranges = [
+    "0.0.0.0/0"
+  ]
 }
