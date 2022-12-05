@@ -31,42 +31,7 @@ resource "google_compute_subnetwork" "ib_trading_subnet" {
   network = google_compute_network.ib_trading_net.id
 }
 
-#tfimport-terraform import google_compute_firewall.ib_trading_net_allow_internal  __project__/ib-trading-net-allow-internal
-resource "google_compute_firewall" "ib_trading_net_allow_internal" {
-  provider = google-beta
 
-  name = "ib-trading-net-allow-internal-${var.env}"
-  direction = "INGRESS"
-  project      = var.project_id
-  priority = 1000
-  source_ranges = [
-    "10.172.0.0/20"
-  ]
-  network = google_compute_network.ib_trading_net.id
-  allow {
-    protocol = "all"
-  }
-}
-
-#tfimport-terraform import google_compute_firewall.ib_trading_net_allow_ssh_bastion_host  __project__/ib-trading-net-allow-ssh-bastion-host
-resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host" {
-  provider = google-beta
-  project      = var.project_id
-  name = "ib-trading-net-allow-ssh-bastion-host-${var.env}"
-  direction = "INGRESS"
-  priority = 1000
-  source_ranges = [
-    "0.0.0.0/0"
-  ]
-  target_tags = [
-    "bastion-host-${var.env}"
-  ]
-  network = google_compute_network.ib_trading_net.id
-  allow {
-    protocol = "TCP"
-    ports = ["22"]
-  }
-}
 
 #tfimport-terraform import google_compute_router.nat_router  __project__/europe-southwest1/nat-router
 resource "google_compute_router" "nat_router" {
@@ -207,4 +172,41 @@ resource "google_artifact_registry_repository" "ib-gateway" {
    source_ranges = [
     "0.0.0.0/0"
   ]
+}
+
+#tfimport-terraform import google_compute_firewall.ib_trading_net_allow_internal  __project__/ib-trading-net-allow-internal
+resource "google_compute_firewall" "ib_trading_net_allow_internal" {
+  provider = google-beta
+
+  name = "ib-trading-net-allow-internal-${var.env}"
+  direction = "INGRESS"
+  project      = var.project_id
+  priority = 1000
+  source_ranges = [
+    "10.172.0.0/20"
+  ]
+  network = google_compute_network.ib_trading_net.id
+  allow {
+    protocol = "all"
+  }
+}
+
+#tfimport-terraform import google_compute_firewall.ib_trading_net_allow_ssh_bastion_host  __project__/ib-trading-net-allow-ssh-bastion-host
+resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host" {
+  provider = google-beta
+  project      = var.project_id
+  name = "ib-trading-net-allow-ssh-bastion-host-${var.env}"
+  direction = "INGRESS"
+  priority = 1000
+  source_ranges = [
+    "35.235.240.0/20"
+  ]
+  target_tags = [
+    "bastion-host-${var.env}"
+  ]
+  network = google_compute_network.ib_trading_net.self_link
+  allow {
+    protocol = "TCP"
+    ports = ["22"]
+  }
 }
