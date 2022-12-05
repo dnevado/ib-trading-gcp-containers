@@ -174,7 +174,7 @@ gcloud components install gke-gcloud-auth-plugin
 gcloud container clusters get-credentials ib-trading-${var.env} --zone ${var.zone} --internal-ip
 sudo sed -i 's/\#Allow 10\.0\.0\.0\/8/Allow 0\.0\.0\.0/g' /etc/tinyproxy/tinyproxy.conf 
 # sudo sed -i 's/\#Allow 10\.0\.0\.0\/8/Allow localhost/g' /etc/tinyproxy/tinyproxy.conf
-sudo service tinyproxy restart 
+sudo service tinyproxy restart  
 
 EOT
   }
