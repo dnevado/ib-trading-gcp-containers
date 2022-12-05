@@ -174,9 +174,6 @@ gcloud components install gke-gcloud-auth-plugin
 gcloud container clusters get-credentials ib-trading-${var.env} --zone ${var.zone} --internal-ip
 sudo sed -i 's/\#Allow 10\.0\.0\.0\/8/Allow 0\.0\.0\.0/g' /etc/tinyproxy/tinyproxy.conf 
 # sudo sed -i 's/\#Allow 10\.0\.0\.0\/8/Allow localhost/g' /etc/tinyproxy/tinyproxy.conf
-# %{for cidr in var.bastion_allowed_ranges}
-#   echo "Allow ${cidr}" >> /etc/tinyproxy/tinyproxy.conf
-# %{endfor}
 sudo service tinyproxy restart 
 
 EOT
@@ -186,6 +183,9 @@ EOT
     scopes = ["https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/devstorage.read_only", "https://www.googleapis.com/auth/servicecontrol", "https://www.googleapis.com/auth/source.read_only"]
   }
 }
+# %{for cidr in var.bastion_allowed_ranges}
+#   echo "Allow ${cidr}" >> /etc/tinyproxy/tinyproxy.conf
+# %{endfor}
 
 resource "google_artifact_registry_repository" "ib-gateway" {
   location      =  var.region
