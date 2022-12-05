@@ -172,7 +172,11 @@ resource "google_compute_instance" "bastion_host" {
 sudo apt-get -y install kubectl git tinyproxy
 gcloud components install gke-gcloud-auth-plugin
 gcloud container clusters get-credentials ib-trading-${var.env} --zone ${var.zone} --internal-ip
-sudo sed -i 's/\#Allow 10\.0\.0\.0\/8/Allow localhost/g' /etc/tinyproxy/tinyproxy.conf 
+sudo sed -i 's/\#Allow 10\.0\.0\.0\/8/Allow 0\.0\.0\.0/g' /etc/tinyproxy/tinyproxy.conf 
+# sudo sed -i 's/\#Allow 10\.0\.0\.0\/8/Allow localhost/g' /etc/tinyproxy/tinyproxy.conf 
+# %{for cidr in var.bastion_allowed_ranges}
+#   echo "Allow ${cidr}" >> /etc/tinyproxy/tinyproxy.conf
+# %{endfor}
 sudo service tinyproxy restart 
 
 EOT
@@ -189,3 +193,17 @@ resource "google_artifact_registry_repository" "ib-gateway" {
   description   = "ib-gateway ${var.env}"
   format        = "DOCKER" 
 }
+
+# And also add a firewall policy for the provided range(s):
+/* resource "google_compute_firewall" "allow_bastion" {
+  count   = length(var.bastion_allowed_ranges) > 0 ? 1 : 0
+  name    = "allow-bastion-proxy${var.env}"
+  network = module.vpc.network_self_link
+  project = module.enabled_google_apis.project_id
+  allow {
+    protocol = "tcp"
+    ports    = ["8888"]
+  }
+  target_tags   = ["bastion"]
+  source_ranges = var.bastion_allowed_ranges
+} */
