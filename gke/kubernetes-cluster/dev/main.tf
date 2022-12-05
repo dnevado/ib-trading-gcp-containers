@@ -196,7 +196,7 @@ resource "google_artifact_registry_repository" "ib-gateway" {
 
 # And also add a firewall policy for the provided range(s):
  resource "google_compute_firewall" "allow_bastion" {
-  name    = "allow-bastion-proxy${var.env}"
+  name    = "allow-bastion-proxy-${var.env}"
   network = google_compute_network.ib_trading_net.id
   project = var.project_id
   allow {
