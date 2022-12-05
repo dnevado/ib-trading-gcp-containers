@@ -195,15 +195,14 @@ resource "google_artifact_registry_repository" "ib-gateway" {
 }
 
 # And also add a firewall policy for the provided range(s):
-# resource "google_compute_firewall" "allow_bastion" {
-#  count   = length(var.bastion_allowed_ranges) > 0 ? 1 : 0
-#  name    = "allow-bastion-proxy${var.env}"
-#  network = module.vpc.network_self_link
-#  project = module.enabled_google_apis.project_id
-#  allow {
-#    protocol = "tcp"
-#    ports    = ["8888"]
-#  }
-#  target_tags   = ["bastion"]
-#  source_ranges = var.bastion_allowed_ranges
-#}
+ resource "google_compute_firewall" "allow_bastion" {
+  name    = "allow-bastion-proxy${var.env}"
+  network = google_compute_network.ib_trading_net.id
+  project = var.project_id
+  allow {
+    protocol = "tcp"
+    ports    = ["8888"]
+  }
+  target_tags   = ["bastion"]
+  source_ranges = "0.0.0.0/0"
+}
