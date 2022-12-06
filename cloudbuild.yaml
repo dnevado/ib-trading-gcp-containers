@@ -146,12 +146,11 @@ steps:
 #    sleep 5
 
 - id: 'Temp proxy bastion host for Cloud Build'
-  name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
-  entrypoint: 'bash'
+  name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  entrypoint: /bin/sh
   args: 
-      - -c
-      - | 
-        chmod 777 $HOME && 
+      - '-c'
+      - |         
         gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a 
 
   # && gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-southwest1-a        
