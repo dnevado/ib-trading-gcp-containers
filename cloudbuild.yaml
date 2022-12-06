@@ -149,13 +149,13 @@ steps:
   name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
   # args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-southwest1-a']
   entrypoint: 'bash'
-  args: ['-c',  echo y && apt purge --autoremove google-cloud-sdk && 
-                curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-410.0.0-linux-x86_64.tar.gz && 
-                mkdir google-cloud-sdk && tar -xzf google-cloud-sdk-* ./google-cloud-sdk && 
-                gcloud components update && 
-                gcloud components install kubectl  &&
-                gcloud container clusters get-credentials --internal-ip ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
-                gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888" 
+  args: ['-c',  echo 'y' && apt purge --autoremove google-cloud-sdk  
+                # &&curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-410.0.0-linux-x86_64.tar.gz && 
+                #mkdir google-cloud-sdk && tar -xzf google-cloud-sdk-* ./google-cloud-sdk && 
+                #gcloud components update && 
+                #gcloud components install kubectl  &&
+                #gcloud container clusters get-credentials --internal-ip ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
+                #gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888" 
           ]
   # args: ['gcloud', 'compute', 'ssh', 'bastion-host-$BRANCH_NAME', '--tunnel-through-iap','--project','api-project-786272790820','--zone','europe-southwest1-a','--region','europe-southwest1-a',
   #       '--','-L8888:localhost:8888']
