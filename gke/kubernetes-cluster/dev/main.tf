@@ -136,6 +136,7 @@ resource "google_compute_instance" "bastion_host" {
 # With the bastion host and the private cluster configured, you must deploy a proxy daemon in the host to forward traffic to the cluster control plane
 # Add localhost as part of the allowed sources 
 sudo apt-get -y install kubectl git tinyproxy
+gcloud components install kubectl
 gcloud components install gke-gcloud-auth-plugin
 gcloud container clusters get-credentials ib-trading-${var.env} --zone ${var.zone} --internal-ip
 sudo sed -i 's/\#Allow 10\.0\.0\.0\/8/Allow 0\.0\.0\.0/g' /etc/tinyproxy/tinyproxy.conf 
