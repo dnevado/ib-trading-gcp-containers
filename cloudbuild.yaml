@@ -146,7 +146,7 @@ steps:
 #    sleep 5
 
 - id: 'Temp proxy bastion host for Cloud Build'
-  name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
   entrypoint: 'bash'
   args: 
       - -c
