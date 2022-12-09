@@ -98,7 +98,7 @@ resource "google_container_cluster" "ib_trading" {
 
   ip_allocation_policy {
   }
-  master_authorized_networks = [{
+  master_authorized_networks_config = [{
     cidr_block   = "${google_compute_instance.bastion_host.ip_address}/32"
     display_name = "Bastion Host Allowed Network CIDR ${var.env} for GKE"
   }]
