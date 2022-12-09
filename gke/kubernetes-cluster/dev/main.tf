@@ -99,6 +99,15 @@ resource "google_container_cluster" "ib_trading" {
   ip_allocation_policy {
   }
 
+  master_authorized_networks_config {
+    cidr_blocks = [
+      {
+         display_name = "Bastion Host Allowed Network CIDR for GKE"
+         cidr_block   = "${google_compute_instance.bastion_host.ip_address}/32"
+      }
+    ]
+  }
+
   private_cluster_config {
     enable_private_nodes = false
     enable_private_endpoint = false
