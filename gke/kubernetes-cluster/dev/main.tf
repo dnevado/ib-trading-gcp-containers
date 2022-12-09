@@ -100,14 +100,14 @@ resource "google_container_cluster" "ib_trading" {
   }
 
   master_authorized_networks_config {
-     cidr_blocks =  [ {
+     cidr_blocks   {
         cidr_block   = "10.172.0.0/20" // TO CHANGE BY APPROPIATE SUBNET PARAMETER , BASTION IP DOES NOT WORK  " "${google_compute_instance.bastion_host.ip_address}/32"
         display_name = "Bastion Host Allowed Network CIDR ${var.env} for GKE"
-     },
-     {
+     }
+     cidr_blocks     {
         cidr_block   = "35.235.240.0/20" // cloudbuild 
         display_name = "Cloud Build Allowed Network CIDR ${var.env} for GKE"
-     }]
+     }
    }
 
   private_cluster_config {
