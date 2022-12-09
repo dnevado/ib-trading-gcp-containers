@@ -42,7 +42,9 @@ spec:
         purpose: gateway
     spec:
       containers:
-      - env:
+      - env:      
+        - name: GCP_PROJECT_ID
+          value: "api-project-786272790820"
         - name: TRADING_MODE
           value: paper
         - name: TWSPASSWORD
@@ -55,7 +57,7 @@ spec:
             secretKeyRef:
               name: credentials-ib-gw-paper
               key: ib-user
-        image: eu.gcr.io/PROJECT_ID/ib-gateway/ibc:latest
+        image: eu.gcr.io/$(GCP_PROJECT_ID)/ib-gateway/ibc:latest
         livenessProbe:
           httpGet:
             path: /
@@ -68,7 +70,7 @@ spec:
         - containerPort: 4003
           name: ib-gw
           protocol: TCP
-      - image: eu.gcr.io/PROJECT_ID/ib-gateway/ib-gateway-healthcheck:latest
+      - image: eu.gcr.io/$(GCP_PROJECT_ID)/ib-gateway/ib-gateway-healthcheck:latest
         name: ib-gw-paper-healthcheck
         ports:
         - containerPort: 8000
