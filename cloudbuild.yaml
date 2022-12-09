@@ -145,7 +145,7 @@ steps:
 #      bastion-host-$BRANCH_NAME 8080 --local-host-port 0.0.0.0:8080 --zone europe-southwest1-a &&
 #    sleep 5
 - id: 'Temp proxy bastion host for Cloud Build'
-  name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+  name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: /bin/sh
   args: 
       - '-c'
