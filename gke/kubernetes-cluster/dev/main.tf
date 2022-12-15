@@ -219,6 +219,6 @@ resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host_iap" {
   network = google_compute_network.ib_trading_net.id
   allow {
     protocol = "tcp"
-    ports = [22,8888]
+    ports = [22]
   }
 }
