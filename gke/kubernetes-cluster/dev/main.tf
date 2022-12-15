@@ -232,3 +232,7 @@ resource "google_project_iam_member" "allow_image_pull" {
   role   = "roles/artifactregistry.reader"
   member = "serviceAccount:${var.email_service_account}"
 }
+
+resource "google_project_service" "allow_api_usage" {
+  service = "cloudresourcemanager.googleapis.com"
+}
