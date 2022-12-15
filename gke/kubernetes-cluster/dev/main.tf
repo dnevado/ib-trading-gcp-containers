@@ -222,3 +222,13 @@ resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host_iap" {
     ports = [22]
   }
 }
+
+/* I believe the correct solution is to add the "roles/artifactregistry.reader" role to the service account 
+that the node pool is configured to use. In terraform that can be done by to avoid errors while pulling images from internal registry
+*/ 
+
+resource "google_project_iam_member" "allow_image_pull" {
+  project = var.project_id
+  role   = "roles/artifactregistry.reader"
+  member = "serviceAccount:${var.email_service_account}"
+}

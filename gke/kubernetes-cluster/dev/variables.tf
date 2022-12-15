@@ -17,3 +17,7 @@ variable "env" {
     type    = string
     default = "dev"
 }
+variable "email_service_account" {
+    type    = string
+    default = "dnevado@gmail.com"
+}
