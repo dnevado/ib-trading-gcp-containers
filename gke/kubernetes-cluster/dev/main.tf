@@ -17,7 +17,7 @@ resource "google_compute_network" "ib_trading_net" {
   project = var.project_id
   name = "ib-trading-net-${var.env}"
   auto_create_subnetworks = false
-  private_ip_google_access = true 
+ 
 }
 
 #tfimport-terraform import google_compute_subnetwork.ib_trading_subnet __project__/europe-southwest1/ib-trading-subnet
@@ -87,6 +87,7 @@ resource "google_container_cluster" "ib_trading" {
         "https://www.googleapis.com/auth/logging.write",
         "https://www.googleapis.com/auth/monitoring"
       ]
+      service_account = var.email_service_account
       tags = [
         "ib-trading-node-${var.env}"
       ]
