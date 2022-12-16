@@ -233,6 +233,8 @@ resource "google_project_iam_member" "allow_image_pull" {
   member = "serviceAccount:${var.email_service_account}"
 }
 
+/* Needs permission default cloudbuild service account for iam to update policy */ 
+
 resource "google_project_service" "allow_api_usage" {
   project = var.project_id
   service = "cloudresourcemanager.googleapis.com"
