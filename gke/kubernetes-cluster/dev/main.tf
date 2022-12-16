@@ -17,6 +17,7 @@ resource "google_compute_network" "ib_trading_net" {
   project = var.project_id
   name = "ib-trading-net-${var.env}"
   auto_create_subnetworks = false
+  private_ip_google_access = true 
 }
 
 #tfimport-terraform import google_compute_subnetwork.ib_trading_subnet __project__/europe-southwest1/ib-trading-subnet
