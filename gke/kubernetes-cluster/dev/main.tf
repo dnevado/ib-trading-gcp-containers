@@ -234,5 +234,7 @@ resource "google_project_iam_member" "allow_image_pull" {
 }
 
 resource "google_project_service" "allow_api_usage" {
+  project = var.project_id
   service = "cloudresourcemanager.googleapis.com"
 }
+
