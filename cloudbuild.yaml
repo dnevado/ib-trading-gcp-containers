@@ -151,7 +151,8 @@ steps:
       - '-c'
       - |                 
         gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
-        kubectl create namespace   ib-trading && 
+        sudo apt-get install kubectl && 
+        kubectl create namespace  ib-trading && 
         kubectl apply -f ./gke/ib-gateway/ib-gateway.yaml
   # gcloud compute ssh bastion-host-$BRANCH_NAME  --project=api-project-786272790820  --zone=europe-southwest1-a  && 
   # && gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-southwest1-a        
