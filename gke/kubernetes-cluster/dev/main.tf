@@ -74,6 +74,7 @@ resource "google_container_cluster" "ib_trading" {
   network = google_compute_network.ib_trading_net.id
   subnetwork = google_compute_subnetwork.ib_trading_subnet.id
   min_master_version = "latest"
+  
   location = var.zone
   node_pool {
     name = "default-pool-${var.env}"
@@ -229,16 +230,31 @@ resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host_iap" {
 that the node pool is configured to use. In terraform that can be done by to avoid errors while pulling images from internal registry
 */ 
 
+/* Needs permission default cloudbuild service account for iam to update policy */ 
+
+
+
+resource "google_project_service" "gcp_resource_manager_api" {
+  project = var.project_id
+  service = "cloudresourcemanager.googleapis.com"
+}
+
+resource "time_sleep" "gcp_wait_crm_api_enabling" {
+  depends_on = [
+    google_project_service.gcp_resource_manager_api
+  ]
+
+  create_duration = "1m"
+}
+
 resource "google_project_iam_member" "allow_image_pull" {
+  depends_on = [
+    google_project_service.gcp_resource_manager_api
+  ]
   project = var.project_id
   role   = "roles/artifactregistry.reader"
   member = "serviceAccount:${var.email_service_account}"
 }
 
-/* Needs permission default cloudbuild service account for iam to update policy */ 
 
-resource "google_project_service" "allow_api_usage" {
-  project = var.project_id
-  service = "cloudresourcemanager.googleapis.com"
-}
 
