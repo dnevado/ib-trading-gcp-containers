@@ -247,6 +247,7 @@ resource "time_sleep" "gcp_wait_crm_api_enabling" {
   create_duration = "1m"
 }
 
+/* probably needed to adjust scope and permission to GCR */
 resource "google_project_iam_member" "allow_image_pull" {
   depends_on = [
     google_project_service.gcp_resource_manager_api
