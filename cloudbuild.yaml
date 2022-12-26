@@ -50,14 +50,14 @@ steps:
         done
       fi 
 
-# [START tf-plan]
+# [Start tf-plan]
 - id: 'tf plan'
   name: 'hashicorp/terraform:1.0.0'
   entrypoint: 'sh'
   args: 
   - '-c'
   - | 
-      if [ -d "kubernetes-cluster/$BRANCH_NAME/" ]; then
+      if [ -d "kubernetes-cluster/$BRANCH_NAME/" ]; then 
         cd kubernetes-cluster/$BRANCH_NAME
         terraform plan
       else
