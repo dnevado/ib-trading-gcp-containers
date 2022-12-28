@@ -94,7 +94,7 @@ steps:
         echo "*******************************************************************************"
       fi
 # [END tf-apply]
-- id: 'Build ibgateway ibc'
+- id: 'Build Ibgateway ibc' 
   name: 'gcr.io/cloud-builders/docker'  
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"] 
 
