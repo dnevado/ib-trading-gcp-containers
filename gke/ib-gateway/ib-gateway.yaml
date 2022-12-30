@@ -57,7 +57,7 @@ spec:
             secretKeyRef:
               name: credentials-ib-gw-paper
               key: ib-user
-        image: gcr.io/$(GCP_PROJECT_ID)/ib-gateway/ibc:latest
+        image: eu.gcr.io/$(GCP_PROJECT_ID)/ib-gateway/ibc:latest
         livenessProbe:
           httpGet:
             path: /
@@ -70,7 +70,7 @@ spec:
         - containerPort: 4003
           name: ib-gw
           protocol: TCP
-      - image: gcr.io/$(GCP_PROJECT_ID)/ib-gateway/ib-gateway-healthcheck:latest
+      - image: eu.gcr.io/$(GCP_PROJECT_ID)/ib-gateway/ib-gateway-healthcheck:latest
         name: ib-gw-paper-healthcheck
         ports:
         - containerPort: 8000
