@@ -254,7 +254,8 @@ resource "google_project_iam_member" "allow_image_pull" {
   ]
   project = var.project_id
   role   = "roles/artifactregistry.reader"
-  member = "serviceAccount:${var.email_service_account}"
+  # member = "serviceAccount:${var.email_service_account}"
+  member = "user:${var.email_service_account}"
 }
 
 
