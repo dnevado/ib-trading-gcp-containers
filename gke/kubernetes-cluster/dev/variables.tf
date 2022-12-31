@@ -19,5 +19,5 @@ variable "env" {
 }
 variable "email_service_account" {
     type    = string
-    default = "786272790820-compute@developer.gserviceaccount.com"
+    default = "dnevado@gmail.com"
 }

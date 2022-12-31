@@ -159,9 +159,9 @@ sudo service tinyproxy restart
 EOT
   }
   service_account {
-    email = "786272790820-compute@developer.gserviceaccount.com"
-    scopes = ["https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/devstorage.read_only", "https://www.googleapis.com/auth/servicecontrol", "https://www.googleapis.com/auth/source.read_only"]
-  }
+    email = "dnevado@gmail.com"
+    scopes = ["https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/monitoring", "https://www.googleapis.com/auth/devstorage.read_only", "https://www.googleapis.com/auth/logging.write", "https://www.googleapis.com/auth/source.read_only"]
+  }          
 }
 # %{for cidr in var.bastion_allowed_ranges}
 #   echo "Allow ${cidr}" >> /etc/tinyproxy/tinyproxy.conf
