@@ -159,9 +159,9 @@ sudo service tinyproxy restart
 EOT
   }
   service_account {
-    email = "dnevado@gmail.com"
+    email = "786272790820-compute@developer.gserviceaccount.com"
     scopes = ["https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/monitoring", "https://www.googleapis.com/auth/devstorage.read_only", "https://www.googleapis.com/auth/logging.write", "https://www.googleapis.com/auth/source.read_only"]
-  }          
+  }
 }
 # %{for cidr in var.bastion_allowed_ranges}
 #   echo "Allow ${cidr}" >> /etc/tinyproxy/tinyproxy.conf
@@ -254,8 +254,7 @@ resource "google_project_iam_member" "allow_image_pull" {
   ]
   project = var.project_id
   role   = "roles/artifactregistry.reader"
-  # member = "serviceAccount:${var.email_service_account}"
-  member = "user:${var.email_service_account}"
+  member = "serviceAccount:${var.email_service_account}"
 }
 
 
