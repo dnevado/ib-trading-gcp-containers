@@ -207,7 +207,7 @@ resource "google_artifact_registry_repository" "ib-gateway" {
 # }
 
 #tfimport-terraform import google_compute_firewall.ib_trading_net_allow_ssh_bastion_host  __project__/ib-trading-net-allow-ssh-bastion-host
-resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host_iap" {
+resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host_through_iap" {
   provider = google-beta
   project      = var.project_id
   name = "ib-trading-net-allow-ssh-bastion-host-iap-${var.env}"
