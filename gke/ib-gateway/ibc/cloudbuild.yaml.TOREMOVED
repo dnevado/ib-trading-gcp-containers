@@ -1,8 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  # args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest', '.' ]
-  args: ["build", "-t", "gcr.io/$PROJECT_ID/mynodejs:$SHORT_SHA", "./gke/ib-gateway"]
+  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest', '.' ]
 
-
-images: [eu.gcr.io/$PROJECT_ID/ibc  :latest]
+images: [eu.gcr.io/$PROJECT_ID/ibc:latest]
 
