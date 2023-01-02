@@ -31,7 +31,8 @@ resource "google_container_cluster" "ib_trading" {
   network = google_compute_network.ib_trading_net.id
   subnetwork = google_compute_subnetwork.ib_trading_subnet.name
   name = "ib-trading-${var.env}"
-
+  ip_allocation_policy {
+  }
 # Enabling Autopilot for this cluster
   enable_autopilot = true
 }
