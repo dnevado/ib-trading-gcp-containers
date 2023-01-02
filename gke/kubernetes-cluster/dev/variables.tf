@@ -21,3 +21,12 @@ variable "email_service_account" {
     type    = string
     default = "786272790820-compute@developer.gserviceaccount.com"
 }
+variable "gke_username" {
+  default     = "dnevado"
+  description = "gke_username"
+}
+ 
+variable "gke_password" {
+  default     = "10203040"
+  description = "gke_password"
+}

@@ -20,6 +20,22 @@ resource "google_compute_network" "ib_trading_net" {
  
 }
 
+
+
+
+ 
+# GKE cluster
+resource "google_container_cluster" "ib_trading" {
+  project     = var.project_id
+  location = var.region
+  network = google_compute_network.ib_trading_net.id
+  subnetwork = google_compute_subnetwork.ib_trading_subnet.name
+  name = "ib-trading-${var.env}"
+
+# Enabling Autopilot for this cluster
+  enable_autopilot = true
+}
+
 #tfimport-terraform import google_compute_subnetwork.ib_trading_subnet __project__/europe-southwest1/ib-trading-subnet
 resource "google_compute_subnetwork" "ib_trading_subnet" {
   provider = google-beta
@@ -61,63 +77,6 @@ resource "google_compute_router_nat" "nat_config" {
   depends_on = [
     google_compute_router.nat_router
   ]
-}
-
-#tfimport-terraform import google_container_cluster.ib_trading __project__//ib-trading
-resource "google_container_cluster" "ib_trading" {
-  provider = google-beta
-  # zone = "europe-southwest1-a"
-  project      = var.project_id
-  # region       = var.region
-  # zone         = var.zone
-  name = "ib-trading-${var.env}"
-  network = google_compute_network.ib_trading_net.id
-  subnetwork = google_compute_subnetwork.ib_trading_subnet.id
-  min_master_version = "latest"
-  
-  location = var.zone
-  node_pool {
-    name = "default-pool-${var.env}"
-    initial_node_count = 1
-    node_config {
-      machine_type = "e2-small"
-      disk_size_gb = 10
-      oauth_scopes = [
-        "https://www.googleapis.com/auth/compute",
-        "https://www.googleapis.com/auth/devstorage.read_only",
-        "https://www.googleapis.com/auth/logging.write",
-        "https://www.googleapis.com/auth/monitoring"
-      ]
-      service_account = var.email_service_account
-      tags = [
-        "ib-trading-node-${var.env}"
-      ]
-    }
-    management {
-      auto_upgrade = true
-      auto_repair = true
-    }
-  }
-
-  ip_allocation_policy {
-  }
-  # Changing 
-  master_authorized_networks_config {
-     cidr_blocks   {
-        cidr_block   = "10.172.0.0/20" // TO CHANGE BY APPROPIATE SUBNET PARAMETER , BASTION IP DOES NOT WORK  " "${google_compute_instance.bastion_host.ip_address}/32"
-        display_name = "Bastion Host Allowed Network CIDR ${var.env} for GKE"
-     } 
-     cidr_blocks     {
-        cidr_block   = "35.235.240.0/20" // cloudbuild 
-        display_name = "Cloud Build Allowed Network CIDR ${var.env} for GKE"
-     }
-   }
-
-  private_cluster_config {
-    enable_private_nodes = false
-    enable_private_endpoint = false
-    master_ipv4_cidr_block = "172.16.0.0/28"
-  }
 }
 
 #tfimport-terraform import google_compute_instance.bastion_host  __project__/europe-southwest1-a/bastion-host
