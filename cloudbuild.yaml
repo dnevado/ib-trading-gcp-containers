@@ -149,13 +149,13 @@ steps:
   entrypoint: /bin/sh
   args: 
       - '-c'
-      - |                 
-        export USE_GKE_GCLOUD_AUTH_PLUGIN=True && 
+      - |                         
         gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
         apt-get install kubectl && 
         kubectl apply  -f ./gke/namespace/namespace.yaml &&                 
         kubectl apply  -n ib-trading  -f ./gke/secrets/$BRANCH_NAME/credentials-ib-gateway.template.yaml &&         
         kubectl apply -f ./gke/ib-gateway/$BRANCH_NAME/ib-gateway.yaml
+  # export USE_GKE_GCLOUD_AUTH_PLUGIN=True && 
   # gcloud compute ssh bastion-host-$BRANCH_NAME  --project=api-project-786272790820  --zone=europe-southwest1-a  && 
   # && gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-southwest1-a        
   # args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-southwest1-a']
