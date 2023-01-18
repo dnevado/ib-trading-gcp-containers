@@ -58,19 +58,19 @@ spec:
               name: credentials-ib-gw-paper-dev
               key: ib-user
         image: eu.gcr.io/api-project-786272790820/ibc:latest
+        name: ib-gw-paper
         livenessProbe:
           httpGet:
             path: /
             port: 8000
           initialDelaySeconds: 120
           periodSeconds: 60
-          timeoutSeconds: 10
-        name: ib-gw-paper
+          timeoutSeconds: 10        
         ports:
         - containerPort: 4003
           name: ib-gw
           protocol: TCP
-      - image: eu.gcr.io/api-project-786272790820/ib-gateway-healthcheck:latest
+        image: eu.gcr.io/api-project-786272790820/ib-gateway-healthcheck:latest
         name: ib-gw-paper-healthcheck
         ports:
         - containerPort: 8000
