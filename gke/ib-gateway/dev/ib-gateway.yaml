@@ -43,22 +43,22 @@ spec:
     spec:
       containers:
       - env:      
-        name: GCP_PROJECT_ID
-        value: "api-project-786272790820"
-        name: TRADING_MODE
-        value: paper
-        name: TWSPASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: credentials-ib-gw-paper-dev
-            key: ib-password
-        name: TWSUSERID
-        valueFrom:
-          secretKeyRef:
-            name: credentials-ib-gw-paper-dev
-            key: ib-user
+        - name: GCP_PROJECT_ID
+          value: "api-project-786272790820"
+        - name: TRADING_MODE
+          value: paper
+        - name: TWSPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: credentials-ib-gw-paper-dev
+              key: ib-password
+        - name: TWSUSERID
+          valueFrom:
+            secretKeyRef:
+              name: credentials-ib-gw-paper-dev
+              key: ib-user
+        image: eu.gcr.io/api-project-786272790820/ibc:latest
         name: ib-gw-paper
-        image: eu.gcr.io/api-project-786272790820/ibc:latest        
         livenessProbe:
           httpGet:
             path: /
@@ -70,8 +70,8 @@ spec:
         - containerPort: 4003
           name: ib-gw
           protocol: TCP
+      - image: eu.gcr.io/api-project-786272790820/ib-gateway-healthcheck:latest
         name: ib-gw-paper-healthcheck
-        image: eu.gcr.io/api-project-786272790820/ib-gateway-healthcheck:latest
         ports:
         - containerPort: 8000
           name: healthcheck
