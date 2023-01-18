@@ -41,7 +41,22 @@ spec:
         ib-mode: paper
         purpose: gateway
     spec:
-      containers:     
+      containers:
+      - env:      
+        name: GCP_PROJECT_ID
+        value: "api-project-786272790820"
+        name: TRADING_MODE
+        value: paper
+        name: TWSPASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: credentials-ib-gw-paper-dev
+            key: ib-password
+        name: TWSUSERID
+        valueFrom:
+          secretKeyRef:
+            name: credentials-ib-gw-paper-dev
+            key: ib-user
         name: ib-gw-paper
         image: eu.gcr.io/api-project-786272790820/ibc:latest        
         livenessProbe:
@@ -86,18 +101,3 @@ spec:
     ib-mode: paper
     purpose: gateway
   type: ClusterIP
-# - env:      
-#        name: GCP_PROJECT_ID
-#        value: "api-project-786272790820"
-#        name: TRADING_MODE
-#        value: paper
-#        name: TWSPASSWORD
-#        valueFrom:
-#          secretKeyRef:
-#            name: credentials-ib-gw-paper-dev
-#            key: ib-password
-#        name: TWSUSERID
-#        valueFrom:
-#          secretKeyRef:
-#            name: credentials-ib-gw-paper-dev
-#            key: ib-user
