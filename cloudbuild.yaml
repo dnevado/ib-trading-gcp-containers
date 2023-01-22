@@ -111,14 +111,14 @@ steps:
 #  entrypoint: 'bash'
   # 
   # **** DOES NOT WORK, MY IP AUTHORIZATION  network  is not a reserved network, which is required for private endpoints
-  # gcloud container clusters update ib-trading-$BRANCH_NAME --zone=europe-southwest1-a --enable-master-authorized-networks --master-authorized-networks $cloudbuild_external_ip/32 &&
+  # gcloud container clusters update ib-trading-$BRANCH_NAME --zone=europe-west9-a --enable-master-authorized-networks --master-authorized-networks $cloudbuild_external_ip/32 &&
   # WE LEAVE A LIKELY SECURITY BREACH 
 #  args:
 #    - -c
 #    - |
 #      apt-get install dnsutils -y &&
 #      cloudbuild_external_ip=$(dig @resolver4.opendns.com myip.opendns.com +short) &&
-#      gcloud container clusters update ib-trading-$BRANCH_NAME --zone=europe-southwest1-a --enable-master-authorized-networks --master-authorized-networks 0.0.0.0/0 &&  
+#      gcloud container clusters update ib-trading-$BRANCH_NAME --zone=europe-west9-a --enable-master-authorized-networks --master-authorized-networks 0.0.0.0/0 &&  
 #      echo $cloudbuild_external_ip
 
 # Disable Control Plane Authorized Networks after Deployment
@@ -130,7 +130,7 @@ steps:
    # - 'update'
     #- 'update'
     #- ib-trading-$BRANCH_NAME'
-    #- '--zone=europe-southwest1-a'
+    #- '--zone=europe-west9-a'
     #- '--no-enable-master-authorized-networks'      
 
 
@@ -142,7 +142,7 @@ steps:
 #  - -c
 #  - docker run -d --net cloudbuild --name kubectl-proxy
 #      gcr.io/cloud-builders/gcloud compute start-iap-tunnel
-#      bastion-host-$BRANCH_NAME 8080 --local-host-port 0.0.0.0:8080 --zone europe-southwest1-a &&
+#      bastion-host-$BRANCH_NAME 8080 --local-host-port 0.0.0.0:8080 --zone europe-west9-a &&
 #    sleep 5
 - id: 'Temp proxy bastion host for Cloud Build'
   name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -151,33 +151,33 @@ steps:
       - '-c'
       - |                 
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True && 
-        gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
+        gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-west9-a &&
         apt-get install kubectl && 
         kubectl apply  -f ./gke/namespace/namespace.yaml &&                 
         kubectl apply  -n ib-trading  -f ./gke/secrets/$BRANCH_NAME/credentials-ib-gateway.template.yaml &&         
         kubectl apply -f ./gke/ib-gateway/$BRANCH_NAME/ib-gateway.yaml
-  # gcloud compute ssh bastion-host-$BRANCH_NAME  --project=api-project-786272790820  --zone=europe-southwest1-a  && 
-  # && gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-southwest1-a        
-  # args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-southwest1-a']
+  # gcloud compute ssh bastion-host-$BRANCH_NAME  --project=api-project-786272790820  --zone=europe-west9-a  && 
+  # && gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-west9-a        
+  # args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-west9-a']
   # entrypoint: 'bash'
-  #args: ['-c', "gcloud container clusters get-credentials --internal-ip ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
-  #              gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a" 
+  #args: ['-c', "gcloud container clusters get-credentials --internal-ip ib-trading-$BRANCH_NAME  --region europe-west9-a &&
+  #              gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-west9-a" 
   #        ]
   #  '--' -L8888:localhost:8888          
-  # args: ['gcloud', 'compute', 'ssh', 'bastion-host-$BRANCH_NAME', '--tunnel-through-iap','--project','api-project-786272790820','--zone','europe-southwest1-a','--region','europe-southwest1-a',
+  # args: ['gcloud', 'compute', 'ssh', 'bastion-host-$BRANCH_NAME', '--tunnel-through-iap','--project','api-project-786272790820','--zone','europe-west9-a','--region','europe-west9-a',
   #       '--','-L8888:localhost:8888']
   #entrypoint: 'bash'
   #args: 
   #- -c
   #- |
-    #gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-southwest1-a &&
-    #gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
+    #gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-west9-a &&
+    #gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-west9-a '--' -L8888:localhost:8888
 
   #entrypoint: sh
   #args:
   #- -c
-  #- gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-southwest1-a
-  #  gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-southwest1-a '--' -L8888:localhost:8888
+  #- gcloud container clusters get-credentials ib-trading-$BRANCH_NAME  --region europe-west9-a
+  #  gcloud compute ssh bastion-host-$BRANCH_NAME --tunnel-through-iap   --project=api-project-786272790820  --zone=europe-west9-a '--' -L8888:localhost:8888
 
 
 # Configure a kubectl workspace for this project
