@@ -92,10 +92,10 @@ resource "google_container_cluster" "ib_trading" {
         "ib-trading-node-${var.env}"
       ]
     }
-    management {
-      auto_upgrade = true
-      auto_repair = true
-    }
+    #management {
+    #  auto_upgrade = true
+    #  auto_repair = true
+    #}
   }
 
   ip_allocation_policy {
