@@ -79,11 +79,6 @@ resource "google_container_cluster" "ib_trading" {
   node_pool {
     name = "default-pool-${var.env}"
     initial_node_count = 1
-    autoscaling {
-       min_node_count = 1
-       max_node_count = 2
-
-    }
     node_config {
       machine_type = "e2-small"
       disk_size_gb = 10      
