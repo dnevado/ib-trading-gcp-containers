@@ -4,12 +4,12 @@ variable "project_id" {
 }
 variable "region" {
     type = string
-    default = "europe-southwest1" 
+    default ="europe-west9" #  "europe-southwest1"  # MILAN - MADRID 
 
 }
 variable "zone" {
     type = string
-    default = "europe-southwest1-a" 
+    default = "europe-west9-a" 
 
 }
 // ["dev", "prod"]

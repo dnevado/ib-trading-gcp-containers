@@ -73,14 +73,16 @@ resource "google_container_cluster" "ib_trading" {
   name = "ib-trading-${var.env}"
   network = google_compute_network.ib_trading_net.id
   subnetwork = google_compute_subnetwork.ib_trading_subnet.id
-  min_master_version = "latest"
+  min_master_version = "1.24.8-gke.2000"
   
   location = var.zone
   node_pool {
     name = "default-pool-${var.env}"
+    #preemptible  = false
     initial_node_count = 1
     node_config {
       machine_type = "e2-small"
+      preemptible     = false
       disk_size_gb = 10      
       oauth_scopes = ["https://www.googleapis.com/auth/compute",
         "https://www.googleapis.com/auth/devstorage.read_only",
@@ -91,11 +93,16 @@ resource "google_container_cluster" "ib_trading" {
       tags = [
         "ib-trading-node-${var.env}"
       ]
+    }    
+    autoscaling {
+      min_node_count = 1
+      max_node_count = 2
     }
-    #management {
+
+    # management {
     #  auto_upgrade = true
     #  auto_repair = true
-    #}
+    # }
   }
 
   ip_allocation_policy {
