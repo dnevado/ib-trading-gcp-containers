@@ -97,10 +97,11 @@ steps:
 - id: 'Build ibgateway ibc' 
   name: 'gcr.io/cloud-builders/docker'  
   # args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"] 
+  secretEnv: ['TWSUSERID', 'TWSPASSWORD']
   args: 
-     - -c
-     - |
-        docker build -t eu.gcr.io/$PROJECT_ID/ibc:latest ./gke/ib-gateway/ibc --build-args=TWSUSERID=$$TWSUSERID,TWSPASSWORD=$$TWSPASSWORD .
+      - -c
+      - |
+         docker build -t eu.gcr.io/$PROJECT_ID/ibc:latest ./gke/ib-gateway/ibc --build-args=TWSUSERID=$$TWSUSERID,TWSPASSWORD=$$TWSPASSWORD .
 
 
 # [END build ibgateway ibc]
