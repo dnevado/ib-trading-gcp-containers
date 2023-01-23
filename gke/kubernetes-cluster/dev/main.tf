@@ -81,7 +81,7 @@ resource "google_container_cluster" "ib_trading" {
     #preemptible  = false
     initial_node_count = 1
     node_config {
-      machine_type = "e2-small"
+      machine_type = "e2-medium"
       preemptible     = false
       disk_size_gb = 10      
       oauth_scopes = ["https://www.googleapis.com/auth/compute",
