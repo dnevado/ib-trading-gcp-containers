@@ -103,9 +103,7 @@ steps:
   #    - -c
   #    - |
   #      docker build -t eu.gcr.io/$PROJECT_ID/ibc:latest  --build-arg 'TWSUSERID=$$TWSUSERID' --build-arg 'TWSPASSWORD=$$TWSPASSWORD' ./gke/ib-gateway/ibc
-  #secretEnv: 
-  #     - "TWSUSERID"
-  #     - "TWSPASSWORD"
+  secretEnv: ["TWSUSERID","TWSPASSWORD"]
 
 # [END build ibgateway ibc]
 - id: 'Build ib-gateway-healthcheck'
