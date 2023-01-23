@@ -228,8 +228,8 @@ options:
 #   _CUSTOM_CLUSTER: ib-trading-$BRANCH_NAME  
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/credentials-ibuser-gw-paper-${var.env}/versions/1
+    - versionName: projects/$PROJECT_ID/secrets/credentials-ibuser-gw-paper-$BRANCH_NAME/versions/1
       env: "TWSUSERID"
-    - versionName: projects/$PROJECT_ID/secrets/credentials-ibpassword-gw-paper-${var.env}/versions/1
+    - versionName: projects/$PROJECT_ID/secrets/credentials-ibpassword-gw-paper-$BRANCH_NAME/versions/1
       env: "TWSPASSWORD"
       
