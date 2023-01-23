@@ -47,16 +47,16 @@ spec:
           value: "api-project-786272790820"
         - name: TRADING_MODE
           value: paper
-        - name: TWSPASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: credentials-ib-gw-paper-prod
-              key: ib-password
-        - name: TWSUSERID
-          valueFrom:
-            secretKeyRef:
-              name: credentials-ib-gw-paper-prod
-              key: ib-user
+        #- name: TWSPASSWORD
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: credentials-ib-gw-paper-prod
+        #      key: ib-password
+        #- name: TWSUSERID
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: credentials-ib-gw-paper-prod
+        #      key: ib-user
         image: eu.gcr.io/api-project-786272790820/ibc:latest
         livenessProbe:
           httpGet:

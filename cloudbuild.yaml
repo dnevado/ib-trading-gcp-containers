@@ -96,8 +96,11 @@ steps:
 # [END tf-apply]
 - id: 'Build ibgateway ibc' 
   name: 'gcr.io/cloud-builders/docker'  
-  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"] 
-
+  # args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"] 
+  args: 
+     - -c
+     - |
+        docker build -t eu.gcr.io/$PROJECT_ID/ibc:latest ./gke/ib-gateway/ibc --build-args=TWSUSERID=$$TWSUSERID,TWSPASSWORD=$$TWSPASSWORD .
 
 
 # [END build ibgateway ibc]
@@ -153,9 +156,9 @@ steps:
         export USE_GKE_GCLOUD_AUTH_PLUGIN=True && 
         gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-west9-a &&
         apt-get install kubectl && 
-        kubectl apply  -f ./gke/namespace/namespace.yaml &&                 
-        kubectl apply  -n ib-trading  -f ./gke/secrets/$BRANCH_NAME/credentials-ib-gateway.template.yaml &&         
+        kubectl apply  -f ./gke/namespace/namespace.yaml &&                         
         kubectl apply -f ./gke/ib-gateway/$BRANCH_NAME/ib-gateway.yaml
+   #kubectl apply  -n ib-trading  -f ./gke/secrets/$BRANCH_NAME/credentials-ib-gateway.template.yaml &&         
   # gcloud compute ssh bastion-host-$BRANCH_NAME  --project=api-project-786272790820  --zone=europe-west9-a  && 
   # && gcloud container clusters get-credentials  ib-trading-$BRANCH_NAME  --region europe-west9-a        
   # args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ib-trading-$BRANCH_NAME','--region','europe-west9-a']
@@ -222,3 +225,10 @@ options:
 # substitutions:
 #   _CUSTOM_REGION: europe-southwest-1
 #   _CUSTOM_CLUSTER: ib-trading-$BRANCH_NAME  
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/credentials-ibuser-gw-paper-${var.env}/versions/1
+      env: "TWSUSERID"
+    - versionName: projects/$PROJECT_ID/secrets/credentials-ibpassword-gw-paper-${var.env}/versions/1
+      env: "TWSPASSWORD"
+      

@@ -15,6 +15,10 @@ ENV APP=GATEWAY \
     TWS_SETTINGS_PATH=/root/Jts \
     TWS_INSTALLATION_DIR=/root/Jts/ibgateway/1019
 
+
+RUN echo login "TWSUSERID" >> ${TWS_INSTALL_LOG} 
+RUN echo password "TWSPASSWORD" >> /${TWS_INSTALL_LOG} 
+
 # make dirs
 RUN mkdir -p /tmp && mkdir -p ${IBC_PATH} && mkdir -p ${TWS_PATH} 
 # && mkdir -p ${TWS_INSTALLATION_DIR}
@@ -33,7 +37,7 @@ RUN chmod +x ${IBC_PATH}/*.sh ${IBC_PATH}/*/*.sh
 # installing on the default path  (y)
 # run after installation no
 # more info https://www.baeldung.com/linux/bash-interactive-prompts
-RUN printf "${TWS_INSTALLATION_DIR}\\nn"  | /tmp/ibgw.sh > ${TWS_INSTALL_LOG} 
+RUN printf "${TWS_INSTALLATION_DIR}\\nn"  | /tmp/ibgw.sh >> ${TWS_INSTALL_LOG} 
 # "/root/Jts/ibgateway/1019\nn"
 
 # remove downloaded files
@@ -42,7 +46,12 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 # copy IBC/Jts configs
 COPY config/config.ini ${IBC_INI}
 
-COPY config/jts.ini ${TWS_PATH}/jts.ini
+# CHANGE INITIAL USER DATA PER CONNECTION 
+RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  ${IBC_INI}
+RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  ${IBC_INI}
+
+
+COPY config/jts.ini ${TWS_PATH}/jts.iniUSE
 
 # copy cmd script
 WORKDIR /home
