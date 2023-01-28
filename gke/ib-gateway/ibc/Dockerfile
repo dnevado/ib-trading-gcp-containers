@@ -16,8 +16,6 @@ ENV APP=GATEWAY \
     TWS_INSTALLATION_DIR=/root/Jts/ibgateway/1019
 
 
-RUN echo login "TWSUSERID" >> ${TWS_INSTALL_LOG} 
-RUN echo password "TWSPASSWORD" >> /${TWS_INSTALL_LOG} 
 
 # make dirs
 RUN mkdir -p /tmp && mkdir -p ${IBC_PATH} && mkdir -p ${TWS_PATH} 
@@ -39,6 +37,9 @@ RUN chmod +x ${IBC_PATH}/*.sh ${IBC_PATH}/*/*.sh
 # more info https://www.baeldung.com/linux/bash-interactive-prompts
 RUN printf "${TWS_INSTALLATION_DIR}\\nn"  | /tmp/ibgw.sh >> ${TWS_INSTALL_LOG} 
 # "/root/Jts/ibgateway/1019\nn"
+RUN echo login ${TWSUSERID} >> ${TWS_INSTALL_LOG} 
+RUN echo password ${TWSPASSWORD}  >> /${TWS_INSTALL_LOG} 
+
 
 # remove downloaded files
 RUN rm /tmp/ibgw.sh /tmp/IBC.zip
