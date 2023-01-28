@@ -12,7 +12,7 @@ spec:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 30Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -47,16 +47,16 @@ spec:
           value: "api-project-786272790820"
         - name: TRADING_MODE
           value: paper
-        - name: TWSPASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: credentials-ib-gw-paper-dev
-              key: ib-password
-        - name: TWSUSERID
-          valueFrom:
-            secretKeyRef:
-              name: credentials-ib-gw-paper-dev
-              key: ib-user
+        #- name: TWSPASSWORD
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: credentials-ib-gw-paper-dev
+        #      key: ib-password
+        #- name: TWSUSERID
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: credentials-ib-gw-paper-dev
+        #      key: ib-user
         image: eu.gcr.io/api-project-786272790820/ibc:latest
         name: ib-gw-paper
         livenessProbe:
