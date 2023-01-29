@@ -93,7 +93,7 @@ steps:
         echo "Branch '$BRANCH_NAME' does not represent an official environment."
         echo "*******************************************************************************"
       fi  
-- id: 'Infra Tf apply'
+- id: 'Test ENV secrets'
   name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: "bash"
   args:
