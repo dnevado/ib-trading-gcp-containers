@@ -6,13 +6,7 @@ resource "google_project_service" "secretmanager" {
   project      = var.project_id
 }
 
-resource "time_sleep" "secretmanager_gcp_wait_crm_api_enabling" {
-  depends_on = [
-    google_project_service.secretmanager
-  ]
 
-  create_duration = "1m"
-}
 
 
 resource "google_secret_manager_secret" "credentials-ibuser-gw-paper" {

@@ -83,7 +83,7 @@ resource "google_container_cluster" "ib_trading" {
     node_config {
       machine_type = "e2-medium"
       preemptible     = false
-      disk_size_gb = 10      
+      disk_size_gb = 10
       oauth_scopes = ["https://www.googleapis.com/auth/compute",
         "https://www.googleapis.com/auth/devstorage.read_only",
         "https://www.googleapis.com/auth/logging.write",
