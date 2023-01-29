@@ -1,7 +1,17 @@
+
+
 resource "google_project_service" "secretmanager" {
   provider = google-beta
   service  = "secretmanager.googleapis.com"
   project      = var.project_id
+}
+
+resource "time_sleep" "secretmanager_gcp_wait_crm_api_enabling" {
+  depends_on = [
+    google_project_service.secretmanager
+  ]
+
+  create_duration = "1m"
 }
 
 
