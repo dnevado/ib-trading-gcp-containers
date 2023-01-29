@@ -103,6 +103,15 @@ resource "google_container_cluster" "ib_trading" {
     #  auto_upgrade = true
     #  auto_repair = true
     # }
+
+    #lifecycle {
+    #ignore_changes = [
+      # Since we provide `remove_default_node_pool = true`, the `node_config` is only relevant for a valid construction of
+      # the GKE cluster in the initial creation. As such, any changes to the `node_config` should be ignored.
+    #  "node_config"
+    #]
+    #}
+
   }
 
   ip_allocation_policy {
