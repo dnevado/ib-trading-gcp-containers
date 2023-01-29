@@ -4,6 +4,11 @@ FROM ubuntu:20.04
 RUN  apt-get update \
   && apt-get install -y wget unzip xvfb libxtst6 libxrender1 xterm socat procps
 
+
+# set ARG variables, secrets inyected from cloud build 
+ARG TWSUSERID
+ARG TWSPASSWORD
+
 # set environment variables
 ENV APP=GATEWAY \
     IBC_INI=/root/ibc/config.ini \
