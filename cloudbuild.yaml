@@ -93,12 +93,13 @@ steps:
         echo "Branch '$BRANCH_NAME' does not represent an official environment."
         echo "*******************************************************************************"
       fi  
-- name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: "bash"
-    args:
-      - -c
-      - echo $$TWSUSERID
-    secretEnv: ['TWSUSERID']
+- id: 'Infra Tf apply'
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: "bash"
+  args:
+  - -c
+  - echo $$TWSUSERID
+  secretEnv: ['TWSUSERID']
 # [END tf-apply]
 - id: 'Build ibgateway ibc' 
   name: 'gcr.io/cloud-builders/docker'  
