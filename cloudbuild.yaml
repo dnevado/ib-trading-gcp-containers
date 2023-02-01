@@ -102,8 +102,7 @@ steps:
   secretEnv: ['TWSUSERID']
 # [END tf-apply]
 - id: 'Build ibgateway ibc' 
-  name: 'gcr.io/cloud-builders/docker'  
-  entrypoint: "bash"
+  name: 'gcr.io/cloud-builders/docker'    
   args:
   - build
   - --build-arg
