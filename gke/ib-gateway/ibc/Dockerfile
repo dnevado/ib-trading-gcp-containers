@@ -6,8 +6,9 @@ RUN  apt-get update \
 
 
 # set ARG variables, secrets inyected from cloud build 
-ARG TWSUSERID
-ARG TWSPASSWORD
+# dummy data 
+ARG TWSUSERID=dnm@dnm.com  
+ARG TWSPASSWORD=10203040
 
 # set environment variables
 ENV APP=GATEWAY \

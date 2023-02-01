@@ -104,12 +104,21 @@ steps:
 - id: 'Build ibgateway ibc' 
   name: 'gcr.io/cloud-builders/docker'  
   entrypoint: "bash"
+  args:
+  - build
+  - --build-arg
+  - TWSUSERID=$$TWSUSERID
+  - --build-arg
+  - TWSPASSWORD=$$TWSPASSWORD
+  - TWSPASSWORD=$$TWSPASSWORD
+  - -t  eu.gcr.io/$PROJECT_ID/ibc:latest
+  - ./gke/ib-gateway/ibc
   # args: ["-c", "docker build --build-arg 'TWSUSERID=$$TWSUSERID' --build-arg 'TWSPASSWORD=$$TWSPASSWORD' -t  eu.gcr.io/$PROJECT_ID/ibc:latest  ./gke/ib-gateway/ibc"]
   # args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"] 
-  args: 
-  - -c
-  - |
-    echo $$TWSUSERID && echo $$TWSPASSWORD && docker build -t eu.gcr.io/$PROJECT_ID/ibc:latest  --build-arg 'TWSUSERID=$$TWSUSERID' --build-arg 'TWSPASSWORD=$$TWSPASSWORD' ./gke/ib-gateway/ibc    
+  # args: 
+  # - -c
+  # - |
+  #   echo $$TWSUSERID && echo $$TWSPASSWORD && docker build -t eu.gcr.io/$PROJECT_ID/ibc:latest  --build-arg 'TWSUSERID=$$TWSUSERID' --build-arg 'TWSPASSWORD=$$TWSPASSWORD' ./gke/ib-gateway/ibc    
   secretEnv: ['TWSUSERID','TWSPASSWORD']
 # [END build ibgateway ibc]
 - id: 'Build ib-gateway-healthcheck'
