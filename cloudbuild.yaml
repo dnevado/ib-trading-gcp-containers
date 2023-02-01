@@ -110,7 +110,8 @@ steps:
   - --build-arg
   - TWSPASSWORD=$$TWSPASSWORD
   - TWSPASSWORD=$$TWSPASSWORD
-  - -t  eu.gcr.io/$PROJECT_ID/ibc:latest
+  - -t 
+  - eu.gcr.io/$PROJECT_ID/ibc:latest
   - ./gke/ib-gateway/ibc
   # args: ["-c", "docker build --build-arg 'TWSUSERID=$$TWSUSERID' --build-arg 'TWSPASSWORD=$$TWSPASSWORD' -t  eu.gcr.io/$PROJECT_ID/ibc:latest  ./gke/ib-gateway/ibc"]
   # args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"] 
