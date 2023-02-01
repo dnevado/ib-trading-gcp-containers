@@ -103,7 +103,7 @@ steps:
 # [END tf-apply]
 - id: 'Build ibgateway ibc' 
   name: 'gcr.io/cloud-builders/docker'      
-  args: ['docker build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest','--build-arg', 'TWSUSERID=$$TWSUSERID','--build-arg', 'TWSPASSWORD=$$TWSPASSWORD','./gke/ib-gateway/ibc']
+  args: ['docker build -t','eu.gcr.io/$PROJECT_ID/ibc:latest','--build-arg', 'TWSUSERID=$$TWSUSERID','--build-arg', 'TWSPASSWORD=$$TWSPASSWORD','./gke/ib-gateway/ibc']
   # args:
   # - build
   # - -t
