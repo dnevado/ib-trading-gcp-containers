@@ -93,25 +93,30 @@ steps:
         echo "Branch '$BRANCH_NAME' does not represent an official environment."
         echo "*******************************************************************************"
       fi  
-- id: 'Test ENV secrets'
-  name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: "bash"
-  args:
-  - -c
-  - echo $$TWSUSERID
-  secretEnv: ['TWSUSERID']
+# - id: 'Test ENV secrets'
+#   name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: "bash"
+#   args:
+#   - -c
+#   - echo $$TWSUSERID
+#   secretEnv: ['TWSUSERID']
 # [END tf-apply]
 - id: 'Build ibgateway ibc' 
   name: 'gcr.io/cloud-builders/docker'      
-  args: ['docker build -t','eu.gcr.io/$PROJECT_ID/ibc:latest','--build-arg', 'TWSUSERID=$$TWSUSERID','--build-arg', 'TWSPASSWORD=$$TWSPASSWORD','./gke/ib-gateway/ibc']
-  # args:
+  entrypoint: 'bash'
+  args: 
+  - -c
+  - |
+     docker build -t eu.gcr.io/$PROJECT_ID/ibc:latest --build-arg TWSUSERID="$$TWSUSERID" --build-arg TWSPASSWORD="$$TWSPASSWORD" ./gke/ib-gateway/ibc
+  secretEnv: ['TWSUSERID','TWSPASSWORD']
+  #args:
   # - build
   # - -t
   # - eu.gcr.io/$PROJECT_ID/ibc:latest
   # - --build-arg
-  # - TWSUSERID=$$TWSUSERID
+  # - TWSUSERID=gcloud secrets versions access latest --secret=credentials-ibuser-gw-paper-dev
   # - --build-arg
-  # - TWSPASSWORD=$$TWSPASSWORD-    
+  # - TWSPASSWORD=gcloud secrets versions access latest --secret=credentials-ibuser-gw-paper-dev
   # - ./gke/ib-gateway/ibc
   # args: ["-c", "docker build --build-arg 'TWSUSERID=$$TWSUSERID' --build-arg 'TWSPASSWORD=$$TWSPASSWORD' -t  eu.gcr.io/$PROJECT_ID/ibc:latest  ./gke/ib-gateway/ibc"]
   # args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/ibc:latest',"./gke/ib-gateway/ibc"] 
@@ -119,7 +124,8 @@ steps:
   # - -c
   # - |
   #   echo $$TWSUSERID && echo $$TWSPASSWORD && docker build -t eu.gcr.io/$PROJECT_ID/ibc:latest  --build-arg 'TWSUSERID=$$TWSUSERID' --build-arg 'TWSPASSWORD=$$TWSPASSWORD' ./gke/ib-gateway/ibc    
-  secretEnv: ['TWSUSERID','TWSPASSWORD']
+  #secretEnv: ['TWSUSERID']
+# images: [eu.gcr.io/$PROJECT_ID/ibc:latest,eu.gcr.io/$PROJECT_ID/ib-gateway-healthcheck:latest]  
 # [END build ibgateway ibc]
 - id: 'Build ib-gateway-healthcheck'
   name: 'gcr.io/cloud-builders/docker'  

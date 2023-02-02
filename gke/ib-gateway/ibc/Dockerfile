@@ -5,10 +5,9 @@ RUN  apt-get update \
   && apt-get install -y wget unzip xvfb libxtst6 libxrender1 xterm socat procps
 
 
-# set ARG variables, secrets inyected from cloud build 
-# dummy data 
-ARG TWSUSERID=dnm@dnm.com  
-ARG TWSPASSWORD=10203040
+# set ARG variables, secrets inyected
+ARG TWSUSERID=xxxxxx
+ARG TWSPASSWORD=yyyyy
 
 # set environment variables
 ENV APP=GATEWAY \
@@ -43,8 +42,8 @@ RUN chmod +x ${IBC_PATH}/*.sh ${IBC_PATH}/*/*.sh
 # more info https://www.baeldung.com/linux/bash-interactive-prompts
 RUN printf "${TWS_INSTALLATION_DIR}\\nn"  | /tmp/ibgw.sh >> ${TWS_INSTALL_LOG} 
 # "/root/Jts/ibgateway/1019\nn"
-RUN echo login ${TWSUSERID} >> ${TWS_INSTALL_LOG} 
-RUN echo password ${TWSPASSWORD}  >> /${TWS_INSTALL_LOG} 
+RUN echo  ${TWSUSERID} >> ${TWS_INSTALL_LOG} 
+RUN echo  ${TWSPASSWORD}  >> /${TWS_INSTALL_LOG} 
 
 
 # remove downloaded files
@@ -57,10 +56,11 @@ COPY config/config.ini ${IBC_INI}
 RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  ${IBC_INI}
 RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  ${IBC_INI}
 
+RUN cat   ${IBC_INI}
 
 COPY config/jts.ini ${TWS_PATH}/jts.iniUSE
 
-# copy cmd script
+# copy cmd script 
 WORKDIR /home
 COPY cmd.sh cmd.sh
 RUN chmod +x cmd.sh
