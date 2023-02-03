@@ -42,8 +42,12 @@ RUN chmod +x ${IBC_PATH}/*.sh ${IBC_PATH}/*/*.sh
 # more info https://www.baeldung.com/linux/bash-interactive-prompts
 RUN printf "${TWS_INSTALLATION_DIR}\\nn"  | /tmp/ibgw.sh >> ${TWS_INSTALL_LOG} 
 # "/root/Jts/ibgateway/1019\nn"
-RUN echo  ${TWSUSERID} >> ${TWS_INSTALL_LOG} 
-RUN echo  ${TWSPASSWORD}  >> /${TWS_INSTALL_LOG} 
+
+RUN echo  ${TWSUSERID} 
+RUN echo  ${TWSPASSWORD}
+
+# RUN echo  ${TWSUSERID} >> ${TWS_INSTALL_LOG} 
+# RUN echo  ${TWSPASSWORD}  >> /${TWS_INSTALL_LOG} 
 
 
 # remove downloaded files

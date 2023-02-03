@@ -19,7 +19,7 @@ resource "google_secret_manager_secret" "credentials-ibuser-gw-paper" {
   }
   lifecycle {
     prevent_destroy = true
-  }
+  } 
 
   depends_on = [google_project_service.secretmanager]
 }
