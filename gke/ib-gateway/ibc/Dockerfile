@@ -56,7 +56,8 @@ COPY config/config.ini ${IBC_INI}
 RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  ${IBC_INI}
 RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  ${IBC_INI}
 
-RUN cat   ${IBC_INI}
+RUN cat   ${IBC_INI} | grep IbLoginId 
+RUN cat   ${IBC_INI} | grep IbPassword 
 
 COPY config/jts.ini ${TWS_PATH}/jts.iniUSE
 

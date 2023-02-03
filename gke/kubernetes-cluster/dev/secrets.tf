@@ -17,6 +17,9 @@ resource "google_secret_manager_secret" "credentials-ibuser-gw-paper" {
   replication {
     automatic = true
   }
+  lifecycle {
+    prevent_destroy = true
+  }
 
   depends_on = [google_project_service.secretmanager]
 }
@@ -37,6 +40,9 @@ resource "google_secret_manager_secret" "credentials-ibpassword-gw-paper" {
 
   replication {
     automatic = true
+  }
+  lifecycle {
+    prevent_destroy = true
   }
 
   depends_on = [google_project_service.secretmanager]
