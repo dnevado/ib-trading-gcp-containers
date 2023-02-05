@@ -59,8 +59,8 @@ COPY config/config.ini ${IBC_INI}
 RUN echo "IbLoginId=" >> /root/ibc/test_sed.delete
 RUN echo "IbPassword=" >> /root/ibc/test_sed.delete
 
-RUN cat  config/test_sed.delete | grep IbLoginId 
-RUN cat  config/test_sed.delete | grep IbPassword 
+RUN cat  /root/ibc/test_sed.delete | grep IbLoginId 
+RUN cat  /root/ibc/test_sed.delete | grep IbPassword 
 
 
 
