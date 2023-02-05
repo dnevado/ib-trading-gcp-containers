@@ -59,6 +59,12 @@ COPY config/config.ini ${IBC_INI}
 RUN echo "IbLoginId=" >> /root/ibc/test_sed.delete
 RUN echo "IbPassword=" >> /root/ibc/test_sed.delete
 
+RUN cat  /root/ibc/test_sed.delete 
+
+
+RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  /root/ibc/test_sed.delete
+RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  /root/ibc/test_sed.delete
+
 RUN cat  /root/ibc/test_sed.delete | grep IbLoginId 
 RUN cat  /root/ibc/test_sed.delete | grep IbPassword 
 
