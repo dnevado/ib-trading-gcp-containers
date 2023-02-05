@@ -56,8 +56,8 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 # copy IBC/Jts configs
 COPY config/config.ini ${IBC_INI}
 
-RUN echo "IbLoginId=" >> config/test_sed.delete
-RUN echo "IbPassword=" >> config/test_sed.delete
+RUN echo "IbLoginId=" >> /root/ibc/test_sed.delete
+RUN echo "IbPassword=" >> /root/ibc/test_sed.delete
 
 RUN cat  config/test_sed.delete | grep IbLoginId 
 RUN cat  config/test_sed.delete | grep IbPassword 
