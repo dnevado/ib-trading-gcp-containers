@@ -56,12 +56,13 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 # copy IBC/Jts configs
 COPY config/config.ini ${IBC_INI}
 
-# CHANGE INITIAL USER DATA PER CONNECTION 
-RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  ${IBC_INI}
-RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  ${IBC_INI}
+RUN echo "IbLoginId=" >> config/test_sed.delete
+RUN echo "IbPassword=" >> config/test_sed.delete
 
-RUN cat   ${IBC_INI} | grep IbLoginId 
-RUN cat   ${IBC_INI} | grep IbPassword 
+RUN cat  config/test_sed.delete | grep IbLoginId 
+RUN cat  config/test_sed.delete | grep IbPassword 
+
+
 
 COPY config/jts.ini ${TWS_PATH}/jts.iniUSE
 
@@ -72,6 +73,15 @@ RUN chmod +x cmd.sh
 
 # set display environment variable (must be set after TWS installation)
 ENV DISPLAY=:0
+
+
+# CHANGE INITIAL USER DATA PER CONNECTION 
+RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  ${IBC_INI}
+RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  ${IBC_INI}
+
+RUN cat   ${IBC_INI} | grep IbLoginId 
+RUN cat   ${IBC_INI} | grep IbPassword 
+
 
 # execute cmd script
 CMD ./cmd.sh
