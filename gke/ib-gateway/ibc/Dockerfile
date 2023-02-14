@@ -19,11 +19,12 @@ ENV APP=GATEWAY \
     TWS_PATH=/root/Jts \
     TWS_SETTINGS_PATH=/root/Jts \
     TWS_INSTALLATION_DIR=/root/Jts/ibgateway/1019 \
+    TEST_FILE_DEBUG_DIR=/root/ibc/ \
     TEST_FILE_DEBUG=/root/ibc/test_sed.delete
 
 
 # make dirs
-RUN mkdir -p /tmp && mkdir -p ${IBC_PATH} && mkdir -p ${TWS_PATH} 
+RUN mkdir -p /tmp && mkdir -p ${IBC_PATH} && mkdir -p ${TWS_PATH}  && mkdir -p ${TEST_FILE_DEBUG_DIR} 
 # && mkdir -p ${TWS_INSTALLATION_DIR}
 # download IB TWS
 RUN wget -q -O /tmp/ibgw.sh https://download2.interactivebrokers.com/installers/ibgateway/stable-standalone/ibgateway-stable-standalone-linux-x64.sh
