@@ -44,8 +44,8 @@ RUN chmod +x ${IBC_PATH}/*.sh ${IBC_PATH}/*/*.sh
 RUN printf "${TWS_INSTALLATION_DIR}\\nn"  | /tmp/ibgw.sh >> ${TWS_INSTALL_LOG} 
 # "/root/Jts/ibgateway/1019\nn"
 
-RUN echo  "${TWSUSERID}-${TWSPASSWORD}" >>  ${TEST_FILE_DEBUG} 
-RUN cat  ${TEST_FILE_DEBUG}
+# RUN echo  "${TWSUSERID}-${TWSPASSWORD}" >>  ${TEST_FILE_DEBUG} 
+# RUN cat  ${TEST_FILE_DEBUG}
 
 # RUN echo  ${TWSUSERID} >> ${TWS_INSTALL_LOG} 
 # RUN echo  ${TWSPASSWORD}  >> /${TWS_INSTALL_LOG} 
@@ -57,20 +57,21 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 # copy IBC/Jts configs
 COPY config/config.ini ${IBC_INI}
 
+RUN ${IBC_INI}
 RUN cat   ${IBC_INI} | grep IbLoginId 
 RUN cat   ${IBC_INI} | grep IbPassword 
 
-RUN echo "IbLoginId=${TWSUSERID}" >> ${TEST_FILE_DEBUG}
-RUN echo "IbPassword=${TWSPASSWORD}" >> ${TEST_FILE_DEBUG}
+# RUN echo "IbLoginId=${TWSUSERID}" >> ${TEST_FILE_DEBUG}
+#  RUN echo "IbPassword=${TWSPASSWORD}" >> ${TEST_FILE_DEBUG}
 
-RUN cat  ${TEST_FILE_DEBUG}
+#  RUN cat  ${TEST_FILE_DEBUG}
 
 
-RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  ${TEST_FILE_DEBUG}
-RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  ${TEST_FILE_DEBUG}
+#  RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  ${TEST_FILE_DEBUG}
+#  RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  ${TEST_FILE_DEBUG}
 
-RUN cat  /root/ibc/test_sed.delete | grep IbLoginId 
-RUN cat  /root/ibc/test_sed.delete | grep IbPassword 
+#  RUN cat  /root/ibc/test_sed.delete | grep IbLoginId 
+# RUN cat  /root/ibc/test_sed.delete | grep IbPassword 
 
 
 
