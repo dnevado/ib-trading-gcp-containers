@@ -57,7 +57,7 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 # copy IBC/Jts configs
 COPY config/config.ini ${IBC_INI}
 
-RUN "File:${IBC_INI}"
+RUN echo "File:${IBC_INI}"
 RUN cat   ${IBC_INI} | grep IbLoginId 
 RUN cat   ${IBC_INI} | grep IbPassword 
 
