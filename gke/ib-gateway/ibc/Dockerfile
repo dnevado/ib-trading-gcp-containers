@@ -57,6 +57,9 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 # copy IBC/Jts configs
 COPY config/config.ini ${IBC_INI}
 
+RUN cat   ${IBC_INI} | grep IbLoginId 
+RUN cat   ${IBC_INI} | grep IbPassword 
+
 RUN echo "IbLoginId=${TWSUSERID}" >> ${TEST_FILE_DEBUG}
 RUN echo "IbPassword=${TWSPASSWORD}" >> ${TEST_FILE_DEBUG}
 
