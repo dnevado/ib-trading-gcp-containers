@@ -58,7 +58,7 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 COPY config/config.ini ${IBC_INI}
 
 RUN echo "IbLoginId=${TWSUSERID}" >> ${TEST_FILE_DEBUG}
-RUN echo "IbPassword=${TWSUSERID}" >> ${TEST_FILE_DEBUG}
+RUN echo "IbPassword=${TWSPASSWORD}" >> ${TEST_FILE_DEBUG}
 
 RUN cat  ${TEST_FILE_DEBUG}
 
