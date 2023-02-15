@@ -57,9 +57,9 @@ RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 # copy IBC/Jts configs
 COPY config/config.ini ${IBC_INI}
 
-RUN echo "File:${IBC_INI}"
-RUN cat   ${IBC_INI} | grep IbLoginId 
-RUN cat   ${IBC_INI} | grep IbPassword 
+# RUN echo "File:${IBC_INI}"
+# RUN cat   ${IBC_INI} | grep IbLoginId 
+# RUN cat   ${IBC_INI} | grep IbPassword 
 
 # RUN echo "IbLoginId=${TWSUSERID}" >> ${TEST_FILE_DEBUG}
 #  RUN echo "IbPassword=${TWSPASSWORD}" >> ${TEST_FILE_DEBUG}
@@ -87,8 +87,8 @@ ENV DISPLAY=:0
 
 
 # CHANGE INITIAL USER DATA PER CONNECTION 
-RUN sed -i -E "s/IbLoginId\=.+/IbLoginId=${TWSUSERID}/"  ${IBC_INI}
-RUN sed -i -E "s/IbPassword\=.+/IbPassword=${TWSPASSWORD}/"  ${IBC_INI}
+RUN sed -i -E "s/IbLoginId=.*/IbLoginId=${TWSUSERID}/"  ${IBC_INI}
+RUN sed -i -E "s/IbPassword=.*/IbPassword=${TWSPASSWORD}/"  ${IBC_INI}
 
 RUN cat   ${IBC_INI} | grep IbLoginId 
 RUN cat   ${IBC_INI} | grep IbPassword 
