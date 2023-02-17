@@ -26,7 +26,7 @@ resource "google_secret_manager_secret_version" "credentials-ibuser-gw-paper-1" 
   provider = google-beta
 
   secret      = google_secret_manager_secret.credentials-ibuser-gw-paper.id
-  secret_data = "Initial user  @yahoo.es"
+  secret_data = "dnmm1975dnmm"
 }
 
 
