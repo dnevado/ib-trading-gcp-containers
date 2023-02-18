@@ -52,6 +52,7 @@ steps:
         done
       fi 
 
+
 # [START tf-plan]
 - id: 'Infra Tf plan'
   name: 'hashicorp/terraform:1.0.0'
@@ -60,7 +61,7 @@ steps:
   - '-c'
   - | 
       if [ -d "gke/kubernetes-cluster/$BRANCH_NAME/" ]; then
-        cd gke/kubernetes-cluster/$BRANCH_NAME
+        cd gke/kubernetes-cluster/$BRANCH_NAME      
         terraform plan
       else
         for dir in gke/kubernetes-cluster
