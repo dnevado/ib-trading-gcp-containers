@@ -102,4 +102,4 @@ RUN cat   ${IBC_PATH}/config.ini | grep IbPassword
 # EXPOSE  4001
 
 # execute cmd script
-# CMD ./cmd.sh
+CMD ./cmd.sh
