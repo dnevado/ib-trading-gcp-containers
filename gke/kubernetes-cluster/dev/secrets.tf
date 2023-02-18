@@ -46,11 +46,9 @@ resource "google_secret_manager_secret_version" "credentials-ibpassword-gw-paper
   provider = google-beta
 
   secret      = google_secret_manager_secret.credentials-ibpassword-gw-paper.id
-<<<<<<< HEAD
-  secret_data = "XXXX"
-=======
+
   secret_data = "Initial password  10203040 ex2"
->>>>>>> parent of 40192b6 (Fixing env variables user password for TWS)
+
 }
 
 
