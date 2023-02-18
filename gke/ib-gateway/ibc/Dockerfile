@@ -55,7 +55,7 @@ RUN printf "${TWS_INSTALLATION_DIR}\\nn"  | /tmp/ibgw.sh >> ${TWS_INSTALL_LOG}
 RUN rm /tmp/ibgw.sh /tmp/IBC.zip
 
 # copy IBC/Jts configs
-COPY config/config.ini ${IBC_INI}
+COPY config/config.ini ${IBC_PATH}/config.ini
 
 # RUN echo "File:${IBC_INI}"
 # RUN cat   ${IBC_INI} | grep IbLoginId 
@@ -87,12 +87,19 @@ ENV DISPLAY=:0
 
 
 # CHANGE INITIAL USER DATA PER CONNECTION 
-RUN sed -i -E "s/IbLoginId=.*/IbLoginId=${TWSUSERID}/"  ${IBC_INI}
-RUN sed -i -E "s/IbPassword=.*/IbPassword=${TWSPASSWORD}/"  ${IBC_INI}
+RUN sed -i -E "s/IbLoginId=.*/IbLoginId=${TWSUSERID}/"  ${IBC_PATH}/config.ini
+RUN sed -i -E "s/IbPassword=.*/IbPassword=${TWSPASSWORD}/"  ${IBC_PATH}/config.ini
 
-RUN cat   ${IBC_INI} | grep IbLoginId 
-RUN cat   ${IBC_INI} | grep IbPassword 
+RUN cat   ${IBC_PATH}/config.ini | grep IbLoginId 
+RUN cat   ${IBC_PATH}/config.ini | grep IbPassword 
 
+# COPY ${IBC_INI}  ${IBC_PATH}/config.ini
+
+
+#  RUN echo "ls -ltr /root/ibc/"
+#  RUN echo "ls -ltr /opt/ibc/"
+
+# EXPOSE  4001
 
 # execute cmd script
-CMD ./cmd.sh
+# CMD ./cmd.sh
