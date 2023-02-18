@@ -46,7 +46,7 @@ resource "google_secret_manager_secret_version" "credentials-ibpassword-gw-paper
   provider = google-beta
 
   secret      = google_secret_manager_secret.credentials-ibpassword-gw-paper.id
-  secret_data = "Initial password  10203040 ex2"
+  secret_data = "nevadodM1!"
 }
 
 
