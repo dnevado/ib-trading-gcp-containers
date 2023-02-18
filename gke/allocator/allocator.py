@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 from google.cloud import firestore_v1 as firestore
-from google.cloud.logging.handlers import ContainerEngineHandler
+from google.cloud.logging.handlers import ContainerEngineHandler # check this out 
 from ib_insync import IB, Contract, Forex, MarketOrder
 import json
 import logging

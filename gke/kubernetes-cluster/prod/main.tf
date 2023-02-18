@@ -1,25 +1,10 @@
 terraform {
   required_providers {
     google = {
-      source  = "hashicorp/google"
-      version = "4.8.0"
+      source = "hashicorp/google"
+      version = "4.43.1"
     }
   }
-}
-
-variable "project_id" {
-    type = string
-    default = "api-project-786272790820" 
-}
-variable "region" {
-    type = string
-    default = "europe-southwest1" 
-
-}
-variable "zone" {
-    type = string
-    default = "europe-southwest1-a" 
-
 }
 
 provider "google" {
@@ -31,15 +16,14 @@ provider "google" {
 resource "google_compute_network" "ib_trading_net" {
   provider = google-beta
   project = var.project_id
-  name = "ib-trading-net"
+  name = "ib-trading-net-${var.env}"
   auto_create_subnetworks = false
 }
 
 #tfimport-terraform import google_compute_subnetwork.ib_trading_subnet __project__/europe-southwest1/ib-trading-subnet
 resource "google_compute_subnetwork" "ib_trading_subnet" {
   provider = google-beta
-
-  name = "ib-trading-subnet"
+  name = "ib-trading-subnet-${var.env}"
   ip_cidr_range = "10.172.0.0/20"
   project      = var.project_id
   region       = var.region
@@ -52,7 +36,7 @@ resource "google_compute_subnetwork" "ib_trading_subnet" {
 resource "google_compute_firewall" "ib_trading_net_allow_internal" {
   provider = google-beta
 
-  name = "ib-trading-net-allow-internal"
+  name = "ib-trading-net-allow-internal-${var.env}"
   direction = "INGRESS"
   project      = var.project_id
   priority = 1000
@@ -69,14 +53,14 @@ resource "google_compute_firewall" "ib_trading_net_allow_internal" {
 resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host" {
   provider = google-beta
   project      = var.project_id
-  name = "ib-trading-net-allow-ssh-bastion-host"
+  name = "ib-trading-net-allow-ssh-bastion-host-${var.env}"
   direction = "INGRESS"
   priority = 1000
   source_ranges = [
     "0.0.0.0/0"
   ]
   target_tags = [
-    "bastion-host"
+    "bastion-host-${var.env}"
   ]
   network = google_compute_network.ib_trading_net.id
   allow {
@@ -89,14 +73,14 @@ resource "google_compute_firewall" "ib_trading_net_allow_ssh_bastion_host" {
 resource "google_compute_router" "nat_router" {
   provider = google-beta
 
-  name = "nat-router"
+  name = "nat-router-${var.env}"
   network = google_compute_network.ib_trading_net.id
   project      = var.project_id
   region       = var.region
   # zone         = var.zone
 }
 resource "google_compute_router_nat" "nat_config" {
-  name = "nat-config"
+  name = "nat-config-${var.env}"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
   nat_ip_allocate_option = "AUTO_ONLY"
   log_config {
@@ -121,13 +105,13 @@ resource "google_container_cluster" "ib_trading" {
   project      = var.project_id
   # region       = var.region
   # zone         = var.zone
-  name = "ib-trading"
+  name = "ib-trading-${var.env}"
   network = google_compute_network.ib_trading_net.id
   subnetwork = google_compute_subnetwork.ib_trading_subnet.id
   min_master_version = "latest"
   location = var.zone
   node_pool {
-    name = "default-pool"
+    name = "default-pool-${var.env}"
     initial_node_count = 1
     node_config {
       machine_type = "e2-small"
@@ -139,7 +123,7 @@ resource "google_container_cluster" "ib_trading" {
         "https://www.googleapis.com/auth/monitoring"
       ]
       tags = [
-        "ib-trading-node"
+        "ib-trading-node-${var.env}"
       ]
     }
     management {
@@ -162,13 +146,13 @@ resource "google_container_cluster" "ib_trading" {
 resource "google_compute_instance" "bastion_host" {
   provider = google-beta
 
-  name = "bastion-host"
+  name = "bastion-host-${var.env}"
   project      = var.project_id
   # region       = var.region
   zone         = var.zone
   machine_type = "e2-small"
   tags = [
-    "bastion-host"
+    "bastion-host-${var.env}"
   ]
   boot_disk {
     auto_delete = true
@@ -193,4 +177,11 @@ EOT
     email = "786272790820-compute@developer.gserviceaccount.com"
     scopes = ["https://www.googleapis.com/auth/cloud-platform", "https://www.googleapis.com/auth/devstorage.read_only", "https://www.googleapis.com/auth/servicecontrol", "https://www.googleapis.com/auth/source.read_only"]
   }
+}
+
+resource "google_artifact_registry_repository" "ib-gateway" {
+  location      =  var.region
+  repository_id = "ib-gateway-${var.env}"
+  description   = "ib-gateway ${var.env}"
+  format        = "DOCKER" 
 }
