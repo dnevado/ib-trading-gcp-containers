@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 # install dependencies
 RUN  apt-get update \
-  && apt-get install -y wget unzip xvfb libxtst6 libxrender1 xterm socat procps
+  && apt-get install -y wget unzip xvfb libxtst6 libxrender1 xterm socat procps dos2unix
 
 
 # set ARG variables, secrets inyected
@@ -94,7 +94,7 @@ RUN cat   ${IBC_PATH}/config.ini | grep IbLoginId
 RUN cat   ${IBC_PATH}/config.ini | grep IbPassword 
 
 # COPY ${IBC_INI}  ${IBC_PATH}/config.ini
-
+RUN  dos2unix ./cmd.sh
 
 #  RUN echo "ls -ltr /root/ibc/"
 #  RUN echo "ls -ltr /opt/ibc/"
@@ -102,4 +102,7 @@ RUN cat   ${IBC_PATH}/config.ini | grep IbPassword
 # EXPOSE  4001
 
 # execute cmd script
+# ENTRYPOINT ["/bin/sh -c"]
 CMD ./cmd.sh
+
+
