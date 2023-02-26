@@ -6,7 +6,7 @@ metadata:
     ib-mode: paper
     purpose: gateway
   name: ib-gw-paper-volume-0
-  namespace: ib-trading
+  #namespace: ib-trading
 spec:
   accessModes:
   - ReadWriteOnce
@@ -23,7 +23,7 @@ metadata:
     ib-mode: paper
     purpose: gateway
   name: ib-gw-paper
-  namespace: ib-trading
+  #namespace: ib-trading
 spec:
   replicas: 1
   selector:
@@ -90,7 +90,7 @@ metadata:
     ib-mode: paper
     purpose: gateway
   name: ib-gw-paper
-  namespace: ib-trading
+  #namespace: ib-trading
 spec:
   ports:
   - name: ib-gw
