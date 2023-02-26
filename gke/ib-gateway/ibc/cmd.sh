@@ -1,6 +1,6 @@
 #!/bin/sh
 # parse complete Java path and TWS version number
-JAVA_PATH=${JAVA_PATH_ROOT}/$(ls "${JAVA_PATH_ROOT}")/bin
+JAVA_PATH=$(find ${JAVA_PATH_ROOT} -name java -print0 | xargs -r0 realpath | xargs dirname) 
 export JAVA_PATH
 # DOES NOT WORK , TO CHECK!!!!!!!!!!!!!!!!
 #TWS_MAJOR_VRSN=$(grep -Eo "IB Gateway [0-9]{3}" < "${TWS_INSTALL_LOG}" | head -n 1 | cut -d" " -f3)
