@@ -11,6 +11,8 @@ echo "JAVA_PATH_ROOT : ${JAVA_PATH_ROOT}"
 echo "TWS_INSTALL_LOG : ${TWS_INSTALL_LOG}"
 echo "TWS_MAJOR_VRSN : ${TWS_MAJOR_VRSN}"
 echo "JAVA_PATH : ${JAVA_PATH}"
+echo "IBC_PATH : ${IBC_PATH}"
+echo "IBC_INI : ${IBC_INI}"
 
 
 echo "Starting Xvfb..."

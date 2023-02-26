@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 # install dependencies
 RUN  apt-get update \
-  && apt-get install -y wget unzip xvfb libxtst6 libxrender1 xterm socat procps dos2unix
+  && apt-get install -y wget unzip xvfb libxtst6 libxrender1 xterm socat procps dos2unix vim
 
 
 # set ARG variables, secrets inyected
@@ -11,7 +11,7 @@ ARG TWSPASSWORD=yyyyy
 
 # set environment variables
 ENV APP=GATEWAY \
-    IBC_INI=/root/ibc/config.ini \
+    IBC_INI=/opt/ibc/config.ini \
     IBC_PATH=/opt/ibc \
     JAVA_PATH_ROOT=/opt/i4j_jres \
     LOG_PATH=/opt/ibc/logs \
